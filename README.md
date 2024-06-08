@@ -131,4 +131,4 @@ Contributions are welcome! Please open an issue or submit a pull request for any
 
 ## License
 
-Distributed under the GNU General Public License v3.0. See `LICENSE` for more information.
+Distributed under the GNU General Public License v3.0. See [LICENSE](LICENSE) for more information.
