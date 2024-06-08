@@ -1,56 +1,53 @@
-// src/components/SensorMap/SensorMap.tsx
-
 "use client";
 
 import React, { useRef, useEffect } from "react";
-import "ol/ol.css";
-import { Map, View } from "ol";
-import { Tile as TileLayer, Vector as VectorLayer } from "ol/layer";
-import { OSM, Vector as VectorSource } from "ol/source";
+import { Map } from "ol";
+import TileLayer from "ol/layer/Tile";
+import VectorLayer from "ol/layer/Vector";
+import OSM from "ol/source/OSM";
+import View from "ol/View";
 import { fromLonLat } from "ol/proj";
+import { Point } from "ol/geom";
 import { Feature } from "ol";
-import { Point as PointGeom } from "ol/geom";
-import { Icon, Style } from "ol/style";
-import { Select } from "ol/interaction";
-import { click } from "ol/events/condition";
-import { useRouter } from "next/navigation";
-import styles from "./SensorMap.module.css";
+import VectorSource from "ol/source/Vector";
+import { Style, Icon } from "ol/style";
+import "ol/ol.css";
 
 interface SensorMapProps {
-    markers: { id: number; lat: number; lon: number }[];
+    markers: { latitude: number; longitude: number; intensity: number }[];
+    locationEnabled: boolean;
 }
 
-const SensorMap: React.FC<SensorMapProps> = ({ markers }) => {
+const SensorMap: React.FC<SensorMapProps> = ({ markers, locationEnabled }) => {
     const mapContainerRef = useRef<HTMLDivElement | null>(null);
-    const router = useRouter();
 
     useEffect(() => {
         if (mapContainerRef.current) {
             const vectorSource = new VectorSource({
-                features: markers.map(
-                    (marker) =>
-                        new Feature({
-                            geometry: new PointGeom(
-                                fromLonLat([marker.lon, marker.lat])
-                            ),
-                            id: marker.id,
+                features: markers.map((marker) => {
+                    const feature = new Feature({
+                        geometry: new Point(
+                            fromLonLat([marker.longitude, marker.latitude])
+                        ),
+                    });
+                    feature.setStyle(
+                        new Style({
+                            image: new Icon({
+                                src: "/path/to/lightning-icon.png", // Path to the lightning icon
+                                scale: 0.05,
+                            }),
                         })
-                ),
+                    );
+                    return feature;
+                }),
             });
 
             const vectorLayer = new VectorLayer({
                 source: vectorSource,
-                style: new Style({
-                    image: new Icon({
-                        src: "/marker-icon2.png", // Pfad zu deinem Marker-Icon
-                        anchor: [0.5, 1],
-                        scale: 2,
-                    }),
-                }),
             });
 
             const map = new Map({
-                target: mapContainerRef.current,
+                target: mapContainerRef.current as HTMLElement,
                 layers: [
                     new TileLayer({
                         source: new OSM(),
@@ -58,33 +55,18 @@ const SensorMap: React.FC<SensorMapProps> = ({ markers }) => {
                     vectorLayer,
                 ],
                 view: new View({
-                    center: fromLonLat([8.251045, 51.739668]), // Beispiel-Koordinaten
-                    zoom: 12,
+                    center: fromLonLat([8.251120510754511, 51.73967409793433]),
+                    zoom: 12.5,
                 }),
             });
 
-            const selectClick = new Select({
-                condition: click,
-                filter: (feature) => feature.getGeometry() instanceof PointGeom,
-            });
-
-            selectClick.on("select", (event) => {
-                const selectedFeature = event.selected[0];
-                if (selectedFeature) {
-                    const sensorId = selectedFeature.get("id");
-                    router.push(`/dashboard/sensor-data?sensorId=${sensorId}`);
-                }
-            });
-
-            map.addInteraction(selectClick);
-
-            return () => {
-                map.setTarget(undefined);
-            };
+            return () => map.setTarget(undefined); // Clean up the map instance on unmount
         }
-    }, [markers, router]);
+    }, [markers]);
 
-    return <div ref={mapContainerRef} className={styles.mapContainer}></div>;
+    return (
+        <div ref={mapContainerRef} style={{ width: "100%", height: "400px" }} />
+    );
 };
 
 export default SensorMap;

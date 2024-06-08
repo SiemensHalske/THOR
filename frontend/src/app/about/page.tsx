@@ -21,7 +21,7 @@ const About = () => {
 
             <Paper elevation={3} className={styles.paper}>
                 <Typography variant="h4" component="h2" gutterBottom>
-                    Einleitung
+                    The THOR Project
                 </Typography>
                 <Divider className={styles.divider} />
                 <Grid container spacing={2} alignItems="center">
@@ -30,7 +30,7 @@ const About = () => {
                     </Grid>
                     <Grid item xs>
                         <Typography variant="h5" component="h3" gutterBottom>
-                            Projektziel
+                            Project goal
                         </Typography>
                         <Typography
                             variant="body1"
