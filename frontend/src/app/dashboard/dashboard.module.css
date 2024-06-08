@@ -1,0 +1,26 @@
+/* src/app/dashboard/dashboard.module.css */
+
+.container {
+    display: flex;
+    flex-direction: column;
+    height: calc(100vh - 128px); /* Höhe der Navbar und des Footers */
+}
+
+.mainNoSidebar {
+    flex: 1;
+    padding: 20px;
+}
+
+.card {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+}
+
+.cardContent {
+    flex: 1;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}

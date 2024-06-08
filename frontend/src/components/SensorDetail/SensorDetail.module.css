@@ -1,0 +1,29 @@
+/* src/components/SensorDetail/SensorDetail.module.css */
+
+.detailContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+}
+
+.cardContainer {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+    flex-wrap: wrap; /* ensures cards wrap to the next line if they don't fit in one row */
+    justify-content: center; /* centers the cards horizontally */
+}
+
+.card {
+    min-width: 300px;
+    min-height: 200px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.gauge {
+    width: 100%;
+}

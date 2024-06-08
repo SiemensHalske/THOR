@@ -1,0 +1,28 @@
+/* src/components/Navbar/Navbar.module.css */
+
+.navbar {
+    background-color: #001529;
+}
+
+.navbar a {
+    color: white;
+    text-decoration: none;
+}
+
+.navbar a:hover {
+    color: #1890ff;
+}
+
+.light-mode .navbar {
+    background-color: #f1f1f1;
+}
+
+.light-mode .navbar a {
+    color: black;
+}
+
+.links {
+    display: flex;
+    gap: 10px;
+    margin-left: 20px;
+}

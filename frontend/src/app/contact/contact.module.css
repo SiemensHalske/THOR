@@ -1,0 +1,42 @@
+/* src/app/contact/contact.module.css */
+
+.container {
+    padding: 20px;
+}
+
+.paper {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+}
+
+.icon {
+    color: #3f51b5;
+    margin-bottom: 10px;
+}
+
+.contactInfo {
+    margin-bottom: 20px;
+}
+
+.buttonContainer {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.socialPaper {
+    text-align: center;
+}
+
+.link {
+    color: #3f51b5;
+    text-decoration: none;
+}
+
+.link:hover {
+    text-decoration: underline;
+}

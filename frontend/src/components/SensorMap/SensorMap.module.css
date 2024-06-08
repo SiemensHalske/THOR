@@ -1,0 +1,13 @@
+/* src/components/SensorMap/SensorMap.module.css */
+
+.mapContainer {
+    width: 97.5%;
+    height: 600px;
+    position: relative;
+    margin: 20px 20px 0 20px;
+}
+
+.markerIcon {
+    width: 100px;
+    height: 100px;
+}

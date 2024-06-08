@@ -1,0 +1,31 @@
+/* src/app/dashboard/sensor-data/SensorDetail-page.module.css */
+
+.container {
+    padding: 20px;
+}
+
+.sensorCard {
+    display: flex;
+    justify-content: center;
+}
+
+.title {
+    text-align: center;
+}
+
+.sensorCardContent {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.sensorImage {
+    width: 100px;
+    height: 100px;
+    margin-right: 20px;
+    border-radius: 8px;
+}
+
+.gauge {
+    width: 100%;
+}

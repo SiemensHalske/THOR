@@ -1,0 +1,27 @@
+/* src/components/Sidebar/Sidebar.module.css */
+
+.sidebar {
+    position: fixed;
+    top: 64px; /* Höhe der Navbar */
+    bottom: 84px; /* Höhe des Footers + zusätzlicher Platz */
+    left: 0;
+    width: 250px;
+    background-color: #1229aa;
+    padding: 20px;
+    border-top-right-radius: 20px;
+    border-bottom-right-radius: 20px;
+    margin: 20px 20px 20px 0;
+    color: white;
+}
+
+.navItem {
+    color: white;
+}
+
+.navItem.selected {
+    background-color: #1e40af;
+}
+
+.listItem {
+    margin: 5px 0;
+}

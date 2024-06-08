@@ -1,0 +1,42 @@
+/* src/app/home.module.css */
+
+.container {
+    padding: 20px;
+}
+
+.sectionTitle {
+    margin-top: 40px;
+}
+
+.paper {
+    padding: 20px;
+}
+
+.listItem {
+    transition: background-color 0.3s ease;
+}
+
+.listItem:hover {
+    background-color: #f0f0f0;
+    color: #001529;
+}
+
+.links {
+    display: flex;
+    gap: 10px;
+    margin-left: 20px;
+}
+
+.learnMoreButton {
+    margin-top: 20px;
+}
+
+.dashboardButton {
+    margin-top: 40px;
+    width: 100%;
+    height: 80px; /* doppelte Höhe */
+
+    font-size: 24px;
+    font-weight: 600;
+    border-radius: 10px;
+}

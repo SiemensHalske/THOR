@@ -1,0 +1,6 @@
+/* src/components/SensorDataCard/SensorDataCard.module.css */
+
+.card {
+    margin: 10px;
+    width: 200px;
+}
