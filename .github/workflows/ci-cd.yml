@@ -39,7 +39,7 @@ jobs:
             - name: Start server on remote
               run: |
                   ssh user@your-server <<EOF
-                    cd /path/to/deployment
+                    cd /projects/THOR/frontend
                     npm install
                     nohup npm start &
                   EOF
