@@ -9,6 +9,8 @@ import Navbar from "../components/Navbar/Navbar";
 import Footer from "../components/Footer/Footer";
 import "../assets/styles/globals.css";
 import { ReactNode, useState, useMemo } from "react";
+import { Provider } from "react-redux";
+import store from "./store";
 
 interface LayoutProps {
     children: ReactNode;
@@ -34,12 +36,17 @@ const Layout = ({ children }: LayoutProps) => {
     return (
         <html lang="en" className={themeMode === "light" ? "light-mode" : ""}>
             <body>
-                <ThemeProvider theme={theme}>
-                    <CssBaseline />
-                    <Navbar themeMode={themeMode} toggleTheme={toggleTheme} />
-                    <main>{children}</main>
-                    <Footer />
-                </ThemeProvider>
+                <Provider store={store}>
+                    <ThemeProvider theme={theme}>
+                        <CssBaseline />
+                        <Navbar
+                            themeMode={themeMode}
+                            toggleTheme={toggleTheme}
+                        />
+                        <main>{children}</main>
+                        <Footer />
+                    </ThemeProvider>
+                </Provider>
             </body>
         </html>
     );

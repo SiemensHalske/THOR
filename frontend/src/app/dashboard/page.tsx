@@ -21,6 +21,7 @@ import {
     Settings,
     NotificationsActive,
     History,
+    Sensors,
 } from "@mui/icons-material";
 
 const DashboardPage = () => {
@@ -84,6 +85,34 @@ const DashboardPage = () => {
                                                 >
                                                     Monitor and analyze sensor
                                                     data.
+                                                </Typography>
+                                            </Box>
+                                        </Box>
+                                    </CardContent>
+                                </CardActionArea>
+                            </Card>
+                        </Link>
+                    </Grid>
+                    <Grid item xs={12} md={4}>
+                        <Link href="/dashboard/sensor-management" passHref>
+                            <Card className={styles.card}>
+                                <CardActionArea>
+                                    <CardContent>
+                                        <Box display="flex" alignItems="center">
+                                            <Sensors fontSize="large" />
+                                            <Box ml={2}>
+                                                <Typography
+                                                    variant="h5"
+                                                    component="div"
+                                                >
+                                                    Sensor Management
+                                                </Typography>
+                                                <Typography
+                                                    variant="body2"
+                                                    color="text.secondary"
+                                                >
+                                                    Add, remove, and manage
+                                                    sensors.
                                                 </Typography>
                                             </Box>
                                         </Box>

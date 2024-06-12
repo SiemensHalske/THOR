@@ -43,6 +43,8 @@ const SensorDataContent = () => {
                                         src={sensor.image}
                                         alt={`Sensor ${sensor.id}`}
                                         className={styles.sensorImage}
+                                        width={200}
+                                        height={200}
                                     />
                                     <Box>
                                         <Typography

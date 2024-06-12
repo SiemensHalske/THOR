@@ -1,0 +1,180 @@
+/* src/app/test/SensorManagement.module.css */
+
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+}
+
+.header {
+    width: 100%;
+    text-align: center;
+    color: #1229aa; /* Dunkelblau für die Überschrift */
+    margin-bottom: 20px;
+}
+
+.content {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+}
+
+.sensorRegistry {
+    flex: 1;
+    margin-right: 20px;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.sensorSettings {
+    flex: 1;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+}
+
+.sensorSettings,
+.sensorRegistry {
+    border: 1px solid #d9d9d9;
+}
+
+.button {
+    background-color: #1229aa; /* Dunkelblau für den Button */
+    color: white;
+    margin: 10px 0;
+    width: 100%;
+}
+
+.settings_button {
+    background-color: #1229aa; /* Dunkelblau für den Button */
+    color: white;
+    margin: 10px 0;
+    width: 100%;
+    align-self: stretch;
+}
+
+.button:hover {
+    background-color: #0e1f8c; /* Etwas dunkleres Blau beim Hover */
+}
+
+.settings_button:hover {
+    background-color: #0e1f8c; /* Etwas dunkleres Blau beim Hover */
+}
+
+.sensorTable {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.sensorTable th,
+.sensorTable td {
+    border: none;
+    padding: 12px 8px;
+    text-align: center;
+    background-color: #ffffff;
+    transition: background-color 0.3s;
+}
+
+.sensorTable th {
+    background-color: #1229aa;
+    color: #ffffff;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.sensorTable tr:nth-child(even) td {
+    background-color: #0e1f8c;
+}
+
+.sensorTable tr:hover td {
+    background-color: #0e1f8c;
+}
+
+.sensorTable th:first-child,
+.sensorTable td:first-child {
+    border-top-left-radius: 8px;
+    border-bottom-left-radius: 8px;
+}
+
+.sensorTable th:last-child,
+.sensorTable td:last-child {
+    border-top-right-radius: 8px;
+    border-bottom-right-radius: 8px;
+}
+
+.dialogTitle {
+    background-color: #1229aa; /* Dunkelblau für den Dialog-Titel */
+    color: white;
+}
+
+.dialogButton {
+    background-color: #1229aa; /* Dunkelblau für die Dialog-Buttons */
+    color: white;
+}
+
+.dialogButton:hover {
+    background-color: #0e1f8c; /* Etwas dunkleres Blau beim Hover */
+}
+
+.sliderContainer {
+    width: 100%;
+    padding: 20px 0;
+}
+
+.sliderContainer .MuiTypography-root {
+    margin-bottom: 10px;
+}
+
+.settingsContainer {
+    display: flex;
+    justify-content: space-between;
+}
+
+.buttonsContainer,
+.slidersContainer {
+    flex: 1;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin: 10px;
+}
+
+.buttonsContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.marqueeContainer {
+    width: 100%;
+    overflow: hidden;
+    white-space: nowrap;
+    text-align: center;
+    border: 1px solid #1229aa; /* Dunkelblauer Rahmen */
+    border-radius: 8px;
+    padding: 10px;
+    margin-top: 20px;
+}
+
+.marquee {
+    display: inline-block;
+    padding-left: 100%;
+    animation: marquee 10s linear infinite;
+}
+
+@keyframes marquee {
+    from {
+        transform: translateX(0%);
+    }
+    to {
+        transform: translateX(-100%);
+    }
+}
