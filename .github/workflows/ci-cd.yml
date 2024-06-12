@@ -33,7 +33,7 @@ jobs:
       working-directory: frontend
       run: npm run start &
       env:
-        PORT: 3000
+        PORT: 8090
 
   deploy:
     runs-on: ubuntu-latest
