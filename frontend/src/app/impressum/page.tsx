@@ -20,7 +20,7 @@ const ImpressumPage = () => {
             <Typography variant="body1" className={styles.paragraph}>
                 <strong>Kontakt</strong>
                 <br />
-                Telefon: 01725272889
+                Telefon: 015126597476
                 <br />
                 E-Mail: hendriksiemens1( at )gmail.com
             </Typography>
