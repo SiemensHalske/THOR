@@ -1,0 +1,96 @@
+.appContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+}
+
+.appTitle {
+    font-size: 2em;
+    margin-bottom: 20px;
+}
+
+.dndContainer {
+    display: flex;
+    justify-content: space-around;
+    width: 100%;
+}
+
+.column {
+    flex: 1;
+    padding: 10px;
+    box-sizing: border-box;
+}
+
+.widgetsList {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+.widgetItem {
+    padding: 10px;
+    margin: 5px 0;
+    background-color: #61dafb;
+    border: 1px solid #ccc;
+    cursor: pointer;
+    user-select: none;
+}
+
+.dragging {
+    opacity: 0.5;
+    background-color: #d3d3d3;
+}
+
+.droppableArea {
+    position: relative;
+    width: auto;
+    height: 800px;
+    border: 2px dashed #ccc;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    margin-top: 20px;
+}
+
+.droppedItem {
+    position: absolute;
+    padding: 10px;
+    background-color: #61dafb;
+    border: 1px solid #ccc;
+    cursor: move;
+    user-select: none;
+    width: 150px; /* Breite des Elements */
+    height: 100px; /* Höhe des Elements */
+}
+
+.mapWidget {
+    position: absolute;
+    padding: 10px;
+    border: 1px solid #ccc;
+    cursor: move;
+    user-select: none;
+    width: 150px; /* Breite des Elements */
+    height: 100px; /* Höhe des Elements */
+}
+
+.over {
+    background-color: #f0f0f0;
+}
+
+.properties {
+    padding: 10px;
+    border: 1px solid #ccc;
+    background-color: #f9f9f9;
+}
+
+.mapOverlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none; /* Allow clicks to pass through the overlay */
+    z-index: 10; /* Ensure the overlay is above the map */
+}

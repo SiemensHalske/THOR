@@ -16,9 +16,16 @@ import "ol/ol.css";
 interface SensorMapProps {
     markers: { latitude: number; longitude: number; intensity: number }[];
     locationEnabled: boolean;
+    center: [number, number];
+    visible?: boolean;
 }
 
-const SensorMap: React.FC<SensorMapProps> = ({ markers, locationEnabled }) => {
+const SensorMap: React.FC<SensorMapProps> = ({
+    markers,
+    locationEnabled,
+    center,
+    visible = true,
+}) => {
     const mapContainerRef = useRef<HTMLDivElement | null>(null);
 
     useEffect(() => {
@@ -46,26 +53,26 @@ const SensorMap: React.FC<SensorMapProps> = ({ markers, locationEnabled }) => {
                 source: vectorSource,
             });
 
+            const tileLayer = new TileLayer({
+                source: new OSM(),
+                visible: visible,
+            });
+
             const map = new Map({
                 target: mapContainerRef.current as HTMLElement,
-                layers: [
-                    new TileLayer({
-                        source: new OSM(),
-                    }),
-                    vectorLayer,
-                ],
+                layers: [tileLayer, vectorLayer],
                 view: new View({
-                    center: fromLonLat([8.251120510754511, 51.73967409793433]),
+                    center: fromLonLat(center),
                     zoom: 12.5,
                 }),
             });
 
             return () => map.setTarget(undefined); // Clean up the map instance on unmount
         }
-    }, [markers]);
+    }, [markers, center, visible]);
 
     return (
-        <div ref={mapContainerRef} style={{ width: "100%", height: "400px" }} />
+        <div ref={mapContainerRef} style={{ width: "100%", height: "100%" }} />
     );
 };
 

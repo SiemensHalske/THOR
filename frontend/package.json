@@ -20,6 +20,7 @@
     "antd": "^5.18.0",
     "css-loader": "^7.1.2",
     "eslint-plugin-react-compiler": "^0.0.0-experimental-51a85ea-20240601",
+    "immutability-helper": "^3.1.1",
     "leaflet": "^1.9.4",
     "less": "^4.2.0",
     "less-loader": "^12.2.0",
@@ -30,6 +31,8 @@
     "next-transpile-modules": "^10.0.1",
     "ol": "^9.2.4",
     "react": "^18.3.1",
+    "react-dnd": "^16.0.1",
+    "react-dnd-html5-backend": "^16.0.1",
     "react-dom": "^18.3.1",
     "react-gauge-chart": "^0.5.1",
     "react-leaflet": "^4.2.1",
@@ -39,6 +42,7 @@
     "style-loader": "^4.0.0"
   },
   "devDependencies": {
+    "@types/immutability-helper": "^2.6.3",
     "@types/leaflet": "^1.9.12",
     "@types/node": "^20",
     "@types/react": "^18",
