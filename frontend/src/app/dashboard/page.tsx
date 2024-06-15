@@ -22,6 +22,7 @@ import {
     NotificationsActive,
     History,
     Sensors,
+    Download,
 } from "@mui/icons-material";
 
 const DashboardPage = () => {
@@ -223,6 +224,33 @@ const DashboardPage = () => {
                                                     color="text.secondary"
                                                 >
                                                     Manage system settings.
+                                                </Typography>
+                                            </Box>
+                                        </Box>
+                                    </CardContent>
+                                </CardActionArea>
+                            </Card>
+                        </Link>
+                    </Grid>
+                    <Grid item xs={12} md={4}>
+                        <Link href="/dashboard/download" passHref>
+                            <Card className={styles.card}>
+                                <CardActionArea>
+                                    <CardContent>
+                                        <Box display="flex" alignItems="center">
+                                            <Download fontSize="large" />
+                                            <Box ml={2}>
+                                                <Typography
+                                                    variant="h5"
+                                                    component="div"
+                                                >
+                                                    Download
+                                                </Typography>
+                                                <Typography
+                                                    variant="body2"
+                                                    color="text.secondary"
+                                                >
+                                                    Download sensor data.
                                                 </Typography>
                                             </Box>
                                         </Box>

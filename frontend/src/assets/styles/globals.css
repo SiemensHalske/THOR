@@ -13,6 +13,11 @@ body {
     display: flex;
     flex-direction: column;
     min-height: 100vh;
+    background-image: url("/path/to/your/image.png");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    color: #ffffff; /* Beispiel für Textfarbe, die zum dunklen Hintergrund passt */
 }
 
 main {

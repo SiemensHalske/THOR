@@ -24,3 +24,14 @@
     flex-direction: row;
     align-items: center;
 }
+
+/* Responsive Design für mobile Geräte */
+@media (max-width: 768px) {
+    .mainNoSidebar {
+        padding: 10px;
+    }
+
+    .cardContent {
+        flex-direction: column;
+    }
+}

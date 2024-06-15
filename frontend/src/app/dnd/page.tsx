@@ -14,6 +14,14 @@ import styles from "./page.module.css";
 import SensorMap from "../../components/SensorMap/SensorMap";
 import SensorDataCard from "../../components/SensorDataCard/SensorDataCard";
 
+const GRID_SIZE = 20;
+
+const snapToGrid = (x: number, y: number) => {
+    const snappedX = Math.round(x / GRID_SIZE) * GRID_SIZE;
+    const snappedY = Math.round(y / GRID_SIZE) * GRID_SIZE;
+    return [snappedX, snappedY];
+};
+
 interface Item {
     id: number;
     text: string;
@@ -198,8 +206,10 @@ const DroppableArea: React.FC<{
                 x: number;
                 y: number;
             };
-            const left = Math.round(draggedItem.left + delta.x);
-            const top = Math.round(draggedItem.top + delta.y);
+            let left = Math.round(draggedItem.left + delta.x);
+            let top = Math.round(draggedItem.top + delta.y);
+
+            [left, top] = snapToGrid(left, top); // Snap to grid
 
             // Check for overlap
             const isOverlapping = items.some((item) => {
@@ -377,7 +387,7 @@ const PropertiesPanel: React.FC<{
                                 value={latMin}
                                 onChange={handleInputChange}
                             />
-                            '
+                            &apos;
                             <input
                                 type="number"
                                 name="latitude_sec"
@@ -385,7 +395,7 @@ const PropertiesPanel: React.FC<{
                                 step="0.01"
                                 onChange={handleInputChange}
                             />
-                            "
+                            &quot;
                         </label>
                     </div>
                     <div>
@@ -404,7 +414,7 @@ const PropertiesPanel: React.FC<{
                                 value={lonMin}
                                 onChange={handleInputChange}
                             />
-                            '
+                            &apos;
                             <input
                                 type="number"
                                 name="longitude_sec"
@@ -412,7 +422,7 @@ const PropertiesPanel: React.FC<{
                                 step="0.01"
                                 onChange={handleInputChange}
                             />
-                            "
+                            &quot;
                         </label>
                     </div>
                 </>

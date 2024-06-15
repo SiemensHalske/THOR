@@ -35,8 +35,38 @@
     margin-top: 40px;
     width: 100%;
     height: 80px; /* doppelte Höhe */
-
     font-size: 24px;
     font-weight: 600;
     border-radius: 10px;
+}
+
+/* Responsive Design für mobile Geräte */
+@media (max-width: 768px) {
+    .container {
+        padding: 10px;
+    }
+
+    .sectionTitle {
+        margin-top: 20px;
+    }
+
+    .paper {
+        padding: 15px;
+    }
+
+    .links {
+        flex-direction: column;
+        gap: 5px;
+        margin-left: 0;
+    }
+
+    .learnMoreButton {
+        margin-top: 10px;
+    }
+
+    .dashboardButton {
+        margin-top: 20px;
+        height: 60px; /* Höhe leicht reduziert */
+        font-size: 20px; /* Schriftgröße leicht reduziert */
+    }
 }

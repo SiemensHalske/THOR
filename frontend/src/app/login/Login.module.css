@@ -1,0 +1,32 @@
+.container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+}
+
+.card {
+    width: 100%;
+    padding: 2rem;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+}
+
+.title {
+    margin-bottom: 2rem;
+    text-align: center;
+    font-weight: bold;
+}
+
+.form {
+    width: 100%;
+}
+
+.textField {
+    margin-bottom: 1rem;
+}
+
+.loginButton {
+    padding: 0.5rem 2rem;
+    font-size: 1rem;
+}

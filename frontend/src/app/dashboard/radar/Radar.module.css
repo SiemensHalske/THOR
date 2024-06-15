@@ -1,0 +1,61 @@
+.heroContainer {
+    position: relative;
+    width: 100%;
+    height: 300px;
+    overflow: hidden;
+}
+
+.heroImage {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+}
+
+.heroText {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    color: white;
+    text-align: center;
+    background: rgba(0, 0, 0, 0.5);
+}
+
+.heroTitle {
+    font-size: 3rem;
+    font-weight: bold;
+}
+
+.heroSubtitle {
+    font-size: 1.5rem;
+}
+
+.pageContainer {
+    padding: 2rem 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.selectorContainer {
+    margin-bottom: 1rem;
+    min-width: 200px;
+}
+
+.mapPaper {
+    width: 80%;
+    padding: 1rem;
+    background-color: rgba(255, 255, 255, 0.8);
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+}
+
+.mapContainer {
+    width: 100%;
+    height: 600px;
+    background: transparent; /* Ensure the background is transparent */
+}

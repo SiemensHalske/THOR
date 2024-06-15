@@ -1,0 +1,64 @@
+/* src/app/alarm-system/alarm-system.module.css */
+
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    background-color: #f5f5f5; /* Heller Hintergrund */
+    min-height: 100vh; /* Volle Höhe des Bildschirms */
+}
+
+.header {
+    width: 100%;
+    text-align: center;
+    color: #1229aa; /* Dunkelblau für die Überschrift */
+    margin-bottom: 20px;
+    font-weight: bold;
+    font-size: 2.5rem; /* Größere Schriftgröße */
+}
+
+.cardContainer {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    width: 100%;
+    max-width: 1200px; /* Maximale Breite für die Karten */
+}
+
+.card {
+    background-color: #ffffff; /* Weißer Hintergrund für die Karten */
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Schatten für die Karten */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.textField {
+    margin: 10px 0;
+    width: 100%; /* Volle Breite für Textfelder */
+}
+
+.saveButton {
+    background-color: #1229aa; /* Dunkelblau für den Button */
+    color: white;
+    margin-top: 20px;
+    padding: 10px 20px;
+    font-size: 1rem; /* Größere Schriftgröße */
+    border-radius: 5px; /* Abgerundete Ecken */
+    transition: background-color 0.3s; /* Übergang für Hover-Effekt */
+}
+
+.saveButton:hover {
+    background-color: #0e1f8c; /* Etwas dunkleres Blau beim Hover */
+}
+
+.snackbar {
+    bottom: 20px; /* Abstand vom unteren Rand */
+}
+
+.alert {
+    width: 100%;
+}

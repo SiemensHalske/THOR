@@ -55,6 +55,7 @@ const LightningData = () => {
                 <SensorMap
                     markers={lightningData}
                     locationEnabled={locationEnabled}
+                    center={[8.251120510754511, 51.73967409793433]}
                 />
             </Box>
             <Box className={styles.panels}>

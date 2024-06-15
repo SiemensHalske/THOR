@@ -34,21 +34,30 @@ const Layout = ({ children }: LayoutProps) => {
     );
 
     return (
-        <html lang="en" className={themeMode === "light" ? "light-mode" : ""}>
-            <body>
-                <Provider store={store}>
-                    <ThemeProvider theme={theme}>
-                        <CssBaseline />
-                        <Navbar
-                            themeMode={themeMode}
-                            toggleTheme={toggleTheme}
-                        />
-                        <main>{children}</main>
-                        <Footer />
-                    </ThemeProvider>
-                </Provider>
-            </body>
-        </html>
+        <>
+            <html
+                lang="en"
+                className={themeMode === "light" ? "light-mode" : ""}
+            >
+                <body
+                    style={{
+                        backgroundImage: `url(/thor-bg.webp)`,
+                    }}
+                >
+                    <Provider store={store}>
+                        <ThemeProvider theme={theme}>
+                            <CssBaseline />
+                            <Navbar
+                                themeMode={themeMode}
+                                toggleTheme={toggleTheme}
+                            />
+                            <main>{children}</main>
+                            <Footer />
+                        </ThemeProvider>
+                    </Provider>
+                </body>
+            </html>
+        </>
     );
 };
 
