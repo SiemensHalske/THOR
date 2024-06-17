@@ -1,0 +1,13 @@
+.profileName {
+    margin-top: 16px;
+    font-weight: bold;
+}
+
+.profileTitle {
+    color: grey;
+}
+
+.cardDescription {
+    margin-top: 8px;
+    color: grey;
+}
