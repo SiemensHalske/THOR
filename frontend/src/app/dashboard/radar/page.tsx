@@ -1,70 +1,36 @@
 "use client";
 
-import React, { useState, useEffect, useRef } from "react";
-import {
-    FormControl,
-    InputLabel,
-    Select,
-    MenuItem,
-    Box,
-    Paper,
-} from "@mui/material";
-import "ol/ol.css";
-import Map from "ol/Map";
-import View from "ol/View";
-import TileLayer from "ol/layer/Tile";
-import OSM from "ol/source/OSM";
-import { fromLonLat } from "ol/proj";
-import ImageLayer from "ol/layer/Image";
-import Static from "ol/source/ImageStatic";
+import React, { useEffect, useState } from "react";
+import { MapContainer, TileLayer, useMap } from "react-leaflet";
+import L from "leaflet";
+import "leaflet/dist/leaflet.css";
+import { FormControl, InputLabel, Select, MenuItem } from "@mui/material";
 import styles from "./Radar.module.css";
 
-const RadarPage = () => {
-    const [layerName, setLayerName] = useState("Regenradar");
-    const mapRef = useRef<Map | null>(null);
-    const layerUrls: Record<string, string> = {
-        Regenradar: "/radar/regenradar.png",
-        Blitzradar: "/radar/blitzradar.png",
-        Warnungen_Gemeinden: "/radar/warnungen_gemeinden.png",
-    };
-
-    const imageExtents: Record<string, [number, number, number, number]> = {
-        Regenradar: [5.866, 47.275, 15.041, 55.058],
-        Blitzradar: [5.866, 47.275, 15.041, 55.058],
-        Warnungen_Gemeinden: [5.866, 47.275, 15.041, 55.058],
-    };
+// Custom component to add the WMS layer
+const WMSLayer = ({ url, layerName }: { url: string; layerName: string }) => {
+    const map = useMap();
 
     useEffect(() => {
-        if (!mapRef.current) {
-            mapRef.current = new Map({
-                target: "map",
-                layers: [
-                    new TileLayer({
-                        source: new OSM(),
-                    }),
-                ],
-                view: new View({
-                    center: fromLonLat([10.4515, 51.1657]),
-                    zoom: 6,
-                }),
-            });
-        }
+        const wmsLayer = L.tileLayer.wms(url, {
+            layers: layerName,
+            format: "image/png",
+            transparent: true,
+            attribution: "© DWD",
+        });
 
-        if (mapRef.current) {
-            const imageLayer = new ImageLayer({
-                source: new Static({
-                    url: layerUrls[layerName],
-                    imageExtent: imageExtents[layerName],
-                }),
-            });
+        map.addLayer(wmsLayer);
 
-            const layers = mapRef.current.getLayers().getArray();
-            if (layers.length > 1) {
-                mapRef.current.removeLayer(layers[layers.length - 1]);
-            }
-            mapRef.current.addLayer(imageLayer);
-        }
-    }, [layerName]);
+        return () => {
+            map.removeLayer(wmsLayer);
+        };
+    }, [url, layerName, map]);
+
+    return null;
+};
+
+const RadarPage = () => {
+    const [layerName, setLayerName] = useState("dwd:Niederschlagsradar");
 
     return (
         <div>
@@ -110,16 +76,32 @@ const RadarPage = () => {
                         onChange={(e) => setLayerName(e.target.value)}
                         label="Wähle eine Karte"
                     >
-                        <MenuItem value="Regenradar">Regenradar</MenuItem>
-                        <MenuItem value="Blitzradar">Blitzradar</MenuItem>
-                        <MenuItem value="Warnungen_Gemeinden">
+                        <MenuItem value="dwd:Niederschlagsradar">
+                            Regenradar
+                        </MenuItem>
+                        <MenuItem value="dwd:Blitzdichte">Blitzradar</MenuItem>
+                        <MenuItem value="dwd:Warnungen_Gemeinden">
                             Warnungen Gemeinden
                         </MenuItem>
                     </Select>
                 </FormControl>
-                <Paper className={styles.mapPaper}>
-                    <div id="map" className={styles.mapContainer}></div>
-                </Paper>
+                <div className={styles.mapBox}>
+                    <MapContainer
+                        className={styles.mapContainer}
+                        center={[51.1657, 10.4515]}
+                        zoom={6}
+                        style={{ height: "600px", width: "100%" }}
+                    >
+                        <TileLayer
+                            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                            attribution="&copy; OpenStreetMap contributors"
+                        />
+                        <WMSLayer
+                            url="https://maps.dwd.de/geoserver/ows?"
+                            layerName={layerName}
+                        />
+                    </MapContainer>
+                </div>
             </div>
         </div>
     );

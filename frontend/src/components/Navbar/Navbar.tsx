@@ -1,8 +1,23 @@
-// src/components/Navbar/Navbar.tsx
-
 import * as React from "react";
-import { AppBar, Toolbar, Typography, Button, IconButton } from "@mui/material";
-import { Brightness4, Brightness7 } from "@mui/icons-material";
+import {
+    AppBar,
+    Toolbar,
+    Typography,
+    IconButton,
+    Drawer,
+    List,
+    ListItem,
+    ListItemText,
+    Divider,
+    ListItemIcon,
+    Box,
+} from "@mui/material";
+import {
+    Brightness4,
+    Brightness7,
+    Menu,
+    AccountCircle,
+} from "@mui/icons-material";
 import Link from "next/link";
 import clsx from "clsx";
 import Image from "next/image";
@@ -14,65 +29,118 @@ interface NavbarProps {
 }
 
 const Navbar: React.FC<NavbarProps> = ({ themeMode, toggleTheme }) => {
-    return (
-        <AppBar
-            position="static"
-            className={clsx(styles.navbar, {
-                "light-mode": themeMode === "light",
-            })}
+    const [drawerOpen, setDrawerOpen] = React.useState(false);
+
+    const toggleDrawer =
+        (open: boolean) => (event: React.KeyboardEvent | React.MouseEvent) => {
+            if (
+                event.type === "keydown" &&
+                ((event as React.KeyboardEvent).key === "Tab" ||
+                    (event as React.KeyboardEvent).key === "Shift")
+            ) {
+                return;
+            }
+            setDrawerOpen(open);
+        };
+
+    const drawerList = () => (
+        <Box
+            className={clsx(styles.list)}
+            role="presentation"
+            onClick={toggleDrawer(false)}
+            onKeyDown={toggleDrawer(false)}
         >
-            <Toolbar>
+            <Box className={styles.logoContainer}>
                 <Link href="/" passHref legacyBehavior>
-                    <IconButton edge="start" color="inherit" aria-label="home">
+                    <IconButton
+                        edge="start"
+                        color="inherit"
+                        aria-label="home"
+                        className={styles.logoButton}
+                    >
                         <Image
                             src="/thor-logo.webp"
                             alt="THOR Logo"
-                            width={40}
-                            height={40}
+                            layout="fixed"
+                            width={150}
+                            height={150}
                         />
                     </IconButton>
                 </Link>
-                <Link href="/" passHref legacyBehavior>
+            </Box>
+            <List>
+                <ListItem button component="a" href="/">
+                    <ListItemText primary="Home" />
+                </ListItem>
+                <ListItem button component="a" href="/about">
+                    <ListItemText primary="About" />
+                </ListItem>
+                <ListItem button component="a" href="/contact">
+                    <ListItemText primary="Contact" />
+                </ListItem>
+                <ListItem button component="a" href="/dashboard">
+                    <ListItemText primary="Dashboard" />
+                </ListItem>
+            </List>
+            <Divider />
+            <List>
+                <ListItem button onClick={toggleTheme}>
+                    <ListItemIcon>
+                        {themeMode === "dark" ? (
+                            <Brightness7 />
+                        ) : (
+                            <Brightness4 />
+                        )}
+                    </ListItemIcon>
+                    <ListItemText primary="Toggle Theme" />
+                </ListItem>
+            </List>
+        </Box>
+    );
+
+    return (
+        <>
+            <AppBar
+                position="static"
+                className={clsx(styles.navbar, {
+                    "light-mode": themeMode === "light",
+                })}
+            >
+                <Toolbar>
+                    <IconButton
+                        edge="start"
+                        color="inherit"
+                        aria-label="menu"
+                        onClick={toggleDrawer(true)}
+                    >
+                        <Menu />
+                    </IconButton>
                     <Typography
                         variant="h6"
-                        component="a"
-                        sx={{
-                            flexGrow: 1,
-                            marginLeft: 2,
-                            textDecoration: "none",
-                            color: "inherit",
-                        }}
+                        component="div"
+                        sx={{ flexGrow: 1 }}
                     >
                         THOR
                     </Typography>
-                </Link>
-                <div className={styles.links}>
-                    <Link href="/" passHref legacyBehavior>
-                        <Button color="inherit" component="a">
-                            Home
-                        </Button>
-                    </Link>
-                    <Link href="/about" passHref legacyBehavior>
-                        <Button color="inherit" component="a">
-                            About
-                        </Button>
-                    </Link>
-                    <Link href="/contact" passHref legacyBehavior>
-                        <Button color="inherit" component="a">
-                            Contact
-                        </Button>
-                    </Link>
-                    <Link href="/dashboard" passHref legacyBehavior>
-                        <Button color="inherit" component="a">
-                            Dashboard
-                        </Button>
-                    </Link>
-                </div>
-                <IconButton edge="end" color="inherit" onClick={toggleTheme}>
-                    {themeMode === "dark" ? <Brightness7 /> : <Brightness4 />}
-                </IconButton>
-            </Toolbar>
-        </AppBar>
+                    <IconButton
+                        edge="end"
+                        color="inherit"
+                        aria-label="user"
+                        component="a"
+                        href="/profile"
+                    >
+                        <AccountCircle />
+                    </IconButton>
+                </Toolbar>
+            </AppBar>
+            <Drawer
+                anchor="left"
+                open={drawerOpen}
+                onClose={toggleDrawer(false)}
+            >
+                {drawerList()}
+            </Drawer>
+        </>
     );
 };
 

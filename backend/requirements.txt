@@ -1,0 +1,15 @@
+fastapi
+uvicorn
+requests
+apscheduler
+flask
+flask-wtf
+flask-sqlalchemy
+flask-migrate
+flask-login
+flask-mail
+flask-restful
+flask-script
+flask-cors
+PyJWT
+flask-jwt-extended
