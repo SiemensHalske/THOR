@@ -2,12 +2,11 @@ import os
 import math
 from geopy.distance import distance
 from geopy.point import Point
-from sqlalchemy import create_engine, Column, Integer, String, Float, ForeignKey
+from sqlalchemy import create_engine, Column, Integer, String, Float, ForeignKey, func
 from sqlalchemy.orm import sessionmaker, relationship, backref, declarative_base
 
 # Datenbankkonfiguration
-DATABASE_URL = os.environ.get(
-    'DATABASE_URL') or 'postgresql://thor_user:zoRRo123@localhost/thor_db'
+DATABASE_URL = os.environ.get('DATABASE_URL') or 'postgresql://thor_user:zoRRo123@localhost/thor_db'
 
 # SQLAlchemy-Setup
 Base = declarative_base()
@@ -15,9 +14,18 @@ engine = create_engine(DATABASE_URL)
 Session = sessionmaker(bind=engine)
 session = Session()
 
+# User-Modell
+class User(Base):
+    __tablename__ = 'users'
+    user_id = Column(Integer, primary_key=True)
+    username = Column(String(50), nullable=False)
+    email = Column(String(100), nullable=False)
+    password = Column(String(100), nullable=False)
+    profile_picture = Column(String(255))
+    created_at = Column(String, default='CURRENT_TIMESTAMP')
+    updated_at = Column(String, default='CURRENT_TIMESTAMP', onupdate='CURRENT_TIMESTAMP')
+
 # Sensor-Modell
-
-
 class Sensor(Base):
     """Sensor model for the application."""
     __tablename__ = 'sensors'
@@ -66,54 +74,51 @@ class Sensor(Base):
             'owner_id': self.owner_id
         }
 
-# User-Modell (dummy)
-
-
-class User(Base):
-    __tablename__ = 'users'
-    user_id = Column(Integer, primary_key=True)
-    user_name = Column(String(100), nullable=False)
-
-
 # Erstellen der Tabellen
 Base.metadata.create_all(engine)
+
+# Überprüfen, ob ein Dummy-Benutzer existiert, und falls nicht, erstellen
+dummy_user = session.query(User).filter_by(user_id=1).first()
+if not dummy_user:
+    dummy_user = User(user_id=1, username='dummy_user', email='dummy_user@example.com', password='dummy_password')
+    session.add(dummy_user)
+    session.commit()
 
 # Ausgangskoordinaten
 center_lat = 51.73907450226525
 center_lon = 8.250903251575782
-radius = 1500  # in Metern
+radius1 = 1500  # in Metern
+radius2 = 3000  # in Metern
 
 # Winkel zwischen den Eckpunkten eines Achtecks
 angle = 360 / 8
 
 # Funktion zur Berechnung der neuen Koordinate basierend auf einem Winkel und einer Entfernung
-
-
 def calculate_new_coordinate(center_point, angle_degrees, distance_m):
-    destination = distance(meters=distance_m).destination(
-        center_point, angle_degrees)
+    destination = distance(meters=distance_m).destination(center_point, angle_degrees)
     return destination.latitude, destination.longitude
-
 
 # Ausgangspunkt
 center_point = Point(center_lat, center_lon)
 
-# Berechnung der Eckpunkte des Achtecks
+# Berechnung der Eckpunkte des ersten Achtecks
 vertices = []
 for i in range(8):
     angle_degrees = i * angle
-    vertex = calculate_new_coordinate(center_point, angle_degrees, radius)
+    vertex = calculate_new_coordinate(center_point, angle_degrees, radius1)
     vertices.append(vertex)
 
-# Berechnung der weiteren 8 Eckpunkte des zweiten Achtecks
+# Berechnung der Eckpunkte des zweiten Achtecks
 for i in range(8):
     angle_degrees = i * angle
-    # doppelter Radius für das zweite Achteck
-    vertex = calculate_new_coordinate(center_point, angle_degrees, radius * 2)
+    vertex = calculate_new_coordinate(center_point, angle_degrees, radius2)
     vertices.append(vertex)
 
+# Überprüfen des höchsten `sensor_id` in der Tabelle `sensors`
+max_sensor_id = session.query(func.max(Sensor.sensor_id)).scalar() or 1
+
 # Hinzufügen der Sensoren zur Datenbank
-for idx, vertex in enumerate(vertices, start=2):  # Beginnend mit ID 2
+for idx, vertex in enumerate(vertices, start=max_sensor_id + 1):  # Beginnend mit dem nächsten freien ID
     lat, lon = vertex
     new_sensor = Sensor(
         sensor_id=idx,
@@ -121,7 +126,7 @@ for idx, vertex in enumerate(vertices, start=2):  # Beginnend mit ID 2
         sensor_name=f'Sensor {idx}',
         latitude=lat,
         longitude=lon,
-        owner_id=1  # Dummy owner_id, du kannst es nach Bedarf anpassen
+        owner_id=dummy_user.user_id  # Verwenden des Dummy-Benutzers
     )
     session.add(new_sensor)
 
