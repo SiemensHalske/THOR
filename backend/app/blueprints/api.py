@@ -44,6 +44,9 @@ def sensors() -> Union[Response, Tuple[Response, int]]:
     GET: Returns a list of all sensors in the database.
     POST: Adds a new sensor to the database.
     """
+
+    print(f"Request method: {request.method}")
+
     if request.method == 'GET':
         sensors_list = [sensor.to_dict() for sensor in Sensor.query.all()]
         return jsonify(sensors_list), 200
@@ -67,5 +70,4 @@ def sensors() -> Union[Response, Tuple[Response, int]]:
 
         return jsonify({"message": "Sensor successfully added"}), 201
 
-    # Fügt einen expliziten Rückgabewert für den Fall hinzu, dass keine der Bedingungen erfüllt ist
     return jsonify({"error": "Method Not Allowed"}), 405
