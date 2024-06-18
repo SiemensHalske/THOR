@@ -1,0 +1,18 @@
+.pageTitle {
+    margin-bottom: 16px;
+    text-align: center;
+    font-weight: bold;
+}
+
+.form {
+    margin-top: 24px;
+}
+
+.textField {
+    margin-bottom: 16px;
+}
+
+.checkboxLabel {
+    margin-bottom: 16px;
+    display: block;
+}

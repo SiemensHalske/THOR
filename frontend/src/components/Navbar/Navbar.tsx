@@ -17,6 +17,10 @@ import {
     Brightness7,
     Menu,
     AccountCircle,
+    Home as HomeIcon,
+    Info as InfoIcon,
+    ContactMail as ContactIcon,
+    Dashboard as DashboardIcon,
 } from "@mui/icons-material";
 import Link from "next/link";
 import clsx from "clsx";
@@ -70,15 +74,27 @@ const Navbar: React.FC<NavbarProps> = ({ themeMode, toggleTheme }) => {
             </Box>
             <List>
                 <ListItem button component="a" href="/">
+                    <ListItemIcon>
+                        <HomeIcon />
+                    </ListItemIcon>
                     <ListItemText primary="Home" />
                 </ListItem>
                 <ListItem button component="a" href="/about">
+                    <ListItemIcon>
+                        <InfoIcon />
+                    </ListItemIcon>
                     <ListItemText primary="About" />
                 </ListItem>
                 <ListItem button component="a" href="/contact">
+                    <ListItemIcon>
+                        <ContactIcon />
+                    </ListItemIcon>
                     <ListItemText primary="Contact" />
                 </ListItem>
                 <ListItem button component="a" href="/dashboard">
+                    <ListItemIcon>
+                        <DashboardIcon />
+                    </ListItemIcon>
                     <ListItemText primary="Dashboard" />
                 </ListItem>
             </List>

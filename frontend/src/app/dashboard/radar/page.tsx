@@ -4,7 +4,14 @@ import React, { useEffect, useState } from "react";
 import { MapContainer, TileLayer, useMap } from "react-leaflet";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
-import { FormControl, InputLabel, Select, MenuItem } from "@mui/material";
+import {
+    FormControl,
+    InputLabel,
+    Select,
+    MenuItem,
+    Typography,
+} from "@mui/material";
+import Image from "next/image";
 import styles from "./Radar.module.css";
 
 // Custom component to add the WMS layer
@@ -32,13 +39,53 @@ const WMSLayer = ({ url, layerName }: { url: string; layerName: string }) => {
 const RadarPage = () => {
     const [layerName, setLayerName] = useState("dwd:Niederschlagsradar");
 
+    const legendContent = () => {
+        switch (layerName) {
+            case "dwd:Niederschlagsradar":
+                return (
+                    <Typography variant="body2" color="white">
+                        {" "}
+                        {/*-- Regenradar --*/}
+                        Zeigt die Niederschlagsintensität in der Region. <br />
+                        <br />
+                        <strong>Farbskala:</strong> <br />
+                        <strong>Blau:</strong> Leichter Niederschlag <br />
+                        <strong>Grün:</strong> Mäßiger Niederschlag <br />
+                        <strong>Gelb:</strong> Starker Niederschlag <br />
+                        <strong>Rot:</strong> Sehr starker Niederschlag <br />
+                        <strong>Violett:</strong> Extrem starker Niederschlag{" "}
+                    </Typography>
+                );
+            case "dwd:Blitzdichte":
+                return (
+                    <Typography variant="body2" color="white">
+                        {" "}
+                        {/*-- Blitzdichte --*/}
+                        Blitzradar: Zeigt die Blitzdichte in der Region.
+                    </Typography>
+                );
+            case "dwd:Warnungen_Gemeinden":
+                return (
+                    <Typography variant="body2" color="white">
+                        {" "}
+                        {/*-- Warnungen Gemeinden --*/}
+                        Warnungen Gemeinden: Zeigt aktuelle Wetterwarnungen für
+                        Gemeinden.
+                    </Typography>
+                );
+            default:
+                return null;
+        }
+    };
+
     return (
         <div>
             <div className={styles.heroContainer}>
-                <img
+                <Image
                     src="/radar-hero-bg.webp"
                     alt="Background Image"
                     className={styles.heroImage}
+                    layout="fill"
                 />
                 <div className={styles.heroText}>
                     <h1 className={styles.heroTitle}>Radar</h1>
@@ -101,6 +148,16 @@ const RadarPage = () => {
                             layerName={layerName}
                         />
                     </MapContainer>
+                </div>
+                <div className={styles.legendBox}>
+                    <div className={styles.legendTitle}>
+                        <Typography variant="h6" color="white">
+                            Legende
+                        </Typography>
+                    </div>
+                    <div className={styles.legendContent}>
+                        {legendContent()}
+                    </div>
                 </div>
             </div>
         </div>

@@ -69,6 +69,42 @@ class Sensor(db.Model):
 
     owner = db.relationship('User', backref=db.backref('sensors', lazy=True))
 
+    def __init__(self, sensor_id, serial_number, sensor_name, latitude, longitude, owner_id):
+        """Initializes the Sensor model."""
+        self.sensor_id = sensor_id
+        self.serial_number = serial_number
+        self.sensor_name = sensor_name
+        self.latitude = latitude
+        self.longitude = longitude
+        self.owner_id = owner_id
+
+    def set_sensor(self, sensor_id, serial_number, sensor_name, latitude, longitude, owner_id):
+        """Sets a sensor in the database."""
+
+        sensor = Sensor(
+            sensor_id=sensor_id,
+            serial_number=serial_number,
+            sensor_name=sensor_name,
+            latitude=latitude,
+            longitude=longitude,
+            owner_id=owner_id
+        )
+
+        db.session.add(sensor)
+        db.session.commit()
+
+        return sensor
+
+    def to_dict(self):
+        return {
+            'sensor_id': self.sensor_id,
+            'serial_number': self.serial_number,
+            'sensor_name': self.sensor_name,
+            'latitude': self.latitude,
+            'longitude': self.longitude,
+            'owner_id': self.owner_id
+        }
+
 
 class LocalizationData(db.Model):
     __tablename__ = 'localizationdata'
