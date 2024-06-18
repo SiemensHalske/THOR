@@ -1,0 +1,347 @@
+<mxfile host="65bd71144e">
+    <diagram id="PnRrEaF8DvbuW29lzWqv" name="Seite-1">
+        <mxGraphModel dx="3482" dy="854" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+            <root>
+                <mxCell id="0"/>
+                <mxCell id="1" parent="0"/>
+                <mxCell id="3" value="Backend Server" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="280" y="542" width="173" height="85" as="geometry"/>
+                </mxCell>
+                <mxCell id="10" value="Initiiert Transfer" style="edgeStyle=none;html=1;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=1.046;entryY=0.492;entryDx=0;entryDy=0;entryPerimeter=0;fontSize=8;" edge="1" parent="1" source="4" target="7">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="39" style="edgeStyle=none;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;fontSize=8;startArrow=none;startFill=0;fillColor=#1ba1e2;strokeColor=#006EAF;strokeWidth=2;" edge="1" parent="1" source="4" target="15">
+                    <mxGeometry relative="1" as="geometry">
+                        <Array as="points">
+                            <mxPoint x="160" y="360"/>
+                            <mxPoint x="160" y="430"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="64" style="edgeStyle=none;html=1;exitX=1;exitY=0;exitDx=0;exitDy=0;entryX=0;entryY=0;entryDx=0;entryDy=0;strokeWidth=3;fontSize=8;startArrow=classic;startFill=1;fillColor=#e3c800;strokeColor=#B09500;" edge="1" parent="1" source="4" target="51">
+                    <mxGeometry relative="1" as="geometry">
+                        <Array as="points">
+                            <mxPoint x="80" y="280"/>
+                            <mxPoint x="340" y="280"/>
+                            <mxPoint x="600" y="280"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="4" value="Mjöllnir 1" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="-160" y="320" width="120" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="6" value="BME688" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="-135" y="190" width="70" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="9" value="&lt;font style=&quot;font-size: 8px;&quot;&gt;Sendet Interrupt&lt;/font&gt;" style="edgeStyle=none;html=1;exitX=1;exitY=0;exitDx=0;exitDy=0;entryX=0;entryY=0.25;entryDx=0;entryDy=0;" edge="1" parent="1" source="7" target="4">
+                    <mxGeometry relative="1" as="geometry">
+                        <Array as="points">
+                            <mxPoint x="-240" y="330"/>
+                            <mxPoint x="-210" y="330"/>
+                            <mxPoint x="-180" y="330"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="11" value="Sendet Daten" style="edgeStyle=none;html=1;exitX=1;exitY=1;exitDx=0;exitDy=0;entryX=0;entryY=0.75;entryDx=0;entryDy=0;fontSize=8;startArrow=none;startFill=0;" edge="1" parent="1" source="7" target="4">
+                    <mxGeometry relative="1" as="geometry">
+                        <Array as="points">
+                            <mxPoint x="-230" y="390"/>
+                            <mxPoint x="-210" y="390"/>
+                            <mxPoint x="-180" y="390"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="7" value="AS3935" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="-310" y="335" width="70" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="12" value="Initiiert Transfer" style="edgeStyle=none;html=1;entryX=0.5;entryY=1;entryDx=0;entryDy=0;fontSize=8;exitX=0.5;exitY=0;exitDx=0;exitDy=0;" edge="1" parent="1" source="4" target="6">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="-159.99999999999997" y="280" as="sourcePoint"/>
+                        <mxPoint x="-160" y="210" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="13" value="&lt;font style=&quot;font-size: 8px;&quot;&gt;Pollt Sensor&amp;nbsp;&lt;/font&gt;" style="edgeStyle=none;html=1;exitX=0.75;exitY=0;exitDx=0;exitDy=0;entryX=1;entryY=1;entryDx=0;entryDy=0;startArrow=none;startFill=0;" edge="1" parent="1" source="4" target="6">
+                    <mxGeometry x="0.3014" relative="1" as="geometry">
+                        <mxPoint x="-19.78" y="270" as="sourcePoint"/>
+                        <mxPoint x="-110.00279950404345" y="272.34268470403094" as="targetPoint"/>
+                        <Array as="points">
+                            <mxPoint x="-50" y="300"/>
+                            <mxPoint x="-50" y="250"/>
+                        </Array>
+                        <mxPoint as="offset"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="14" value="Sendet Daten" style="edgeStyle=none;html=1;exitX=0;exitY=1;exitDx=0;exitDy=0;entryX=0.25;entryY=0;entryDx=0;entryDy=0;fontSize=8;startArrow=none;startFill=0;" edge="1" parent="1" source="6" target="4">
+                    <mxGeometry x="-0.2541" relative="1" as="geometry">
+                        <mxPoint x="-225.22279950404345" y="249.9973152959691" as="sourcePoint"/>
+                        <mxPoint x="-135" y="252.34000000000003" as="targetPoint"/>
+                        <Array as="points">
+                            <mxPoint x="-150" y="250"/>
+                            <mxPoint x="-150" y="270"/>
+                            <mxPoint x="-150" y="300"/>
+                        </Array>
+                        <mxPoint as="offset"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="15" value="&lt;font style=&quot;font-size: 12px;&quot;&gt;LoRaWan Gateway&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fontSize=8;" vertex="1" parent="1">
+                    <mxGeometry x="306" y="400" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="16" value="Initiiert Transfer" style="edgeStyle=none;html=1;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=1.046;entryY=0.492;entryDx=0;entryDy=0;entryPerimeter=0;fontSize=8;" edge="1" parent="1" source="17" target="21">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="40" style="edgeStyle=none;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;fontSize=8;startArrow=none;startFill=0;fillColor=#1ba1e2;strokeColor=#006EAF;strokeWidth=2;" edge="1" parent="1" source="17" target="15">
+                    <mxGeometry relative="1" as="geometry">
+                        <Array as="points">
+                            <mxPoint x="160" y="780"/>
+                            <mxPoint x="160" y="430"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="62" style="edgeStyle=none;html=1;exitX=0;exitY=0;exitDx=0;exitDy=0;entryX=0;entryY=1;entryDx=0;entryDy=0;strokeWidth=3;fontSize=8;startArrow=classic;startFill=1;fillColor=#e3c800;strokeColor=#B09500;" edge="1" parent="1" source="17" target="4">
+                    <mxGeometry relative="1" as="geometry">
+                        <Array as="points">
+                            <mxPoint x="-240" y="660"/>
+                            <mxPoint x="-240" y="460"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="66" style="edgeStyle=none;html=1;exitX=1;exitY=0;exitDx=0;exitDy=0;entryX=0;entryY=1;entryDx=0;entryDy=0;strokeWidth=3;fontSize=8;startArrow=classic;startFill=1;fillColor=#e3c800;strokeColor=#B09500;" edge="1" parent="1" source="17" target="51">
+                    <mxGeometry relative="1" as="geometry">
+                        <Array as="points">
+                            <mxPoint x="80" y="720"/>
+                            <mxPoint x="240" y="720"/>
+                            <mxPoint x="480" y="720"/>
+                            <mxPoint x="560" y="650"/>
+                            <mxPoint x="560" y="440"/>
+                            <mxPoint x="640" y="400"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="17" value="Mjöllnir 1" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="-160" y="740" width="120" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="18" value="BME688" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="-135" y="610" width="70" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="19" value="&lt;font style=&quot;font-size: 8px;&quot;&gt;Sendet Interrupt&lt;/font&gt;" style="edgeStyle=none;html=1;exitX=1;exitY=0;exitDx=0;exitDy=0;entryX=0;entryY=0.25;entryDx=0;entryDy=0;" edge="1" parent="1" source="21" target="17">
+                    <mxGeometry relative="1" as="geometry">
+                        <Array as="points">
+                            <mxPoint x="-240" y="750"/>
+                            <mxPoint x="-210" y="750"/>
+                            <mxPoint x="-180" y="750"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="20" value="Sendet Daten" style="edgeStyle=none;html=1;exitX=1;exitY=1;exitDx=0;exitDy=0;entryX=0;entryY=0.75;entryDx=0;entryDy=0;fontSize=8;startArrow=none;startFill=0;" edge="1" parent="1" source="21" target="17">
+                    <mxGeometry relative="1" as="geometry">
+                        <Array as="points">
+                            <mxPoint x="-230" y="810"/>
+                            <mxPoint x="-210" y="810"/>
+                            <mxPoint x="-180" y="810"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="21" value="AS3935" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="-310" y="755" width="70" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="22" value="Initiiert Transfer" style="edgeStyle=none;html=1;entryX=0.5;entryY=1;entryDx=0;entryDy=0;fontSize=8;exitX=0.5;exitY=0;exitDx=0;exitDy=0;" edge="1" parent="1" source="17" target="18">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="-159.99999999999997" y="700" as="sourcePoint"/>
+                        <mxPoint x="-160" y="630" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="23" value="&lt;font style=&quot;font-size: 8px;&quot;&gt;Pollt Sensor&amp;nbsp;&lt;/font&gt;" style="edgeStyle=none;html=1;exitX=0.75;exitY=0;exitDx=0;exitDy=0;entryX=1;entryY=1;entryDx=0;entryDy=0;startArrow=none;startFill=0;" edge="1" parent="1" source="17" target="18">
+                    <mxGeometry x="0.3014" relative="1" as="geometry">
+                        <mxPoint x="-19.78" y="690" as="sourcePoint"/>
+                        <mxPoint x="-110.00279950404345" y="692.342684704031" as="targetPoint"/>
+                        <Array as="points">
+                            <mxPoint x="-50" y="720"/>
+                            <mxPoint x="-50" y="670"/>
+                        </Array>
+                        <mxPoint as="offset"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="24" value="Sendet Daten" style="edgeStyle=none;html=1;exitX=0;exitY=1;exitDx=0;exitDy=0;entryX=0.25;entryY=0;entryDx=0;entryDy=0;fontSize=8;startArrow=none;startFill=0;" edge="1" parent="1" source="18" target="17">
+                    <mxGeometry x="-0.2541" relative="1" as="geometry">
+                        <mxPoint x="-225.22279950404345" y="669.9973152959691" as="sourcePoint"/>
+                        <mxPoint x="-135" y="672.34" as="targetPoint"/>
+                        <Array as="points">
+                            <mxPoint x="-150" y="670"/>
+                            <mxPoint x="-150" y="690"/>
+                            <mxPoint x="-150" y="720"/>
+                        </Array>
+                        <mxPoint as="offset"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="25" value="" style="shape=flexArrow;endArrow=classic;startArrow=classic;html=1;fontSize=8;entryX=0.5;entryY=1;entryDx=0;entryDy=0;exitX=0.5;exitY=0;exitDx=0;exitDy=0;endWidth=9.655172413793103;endSize=5.606896551724138;startWidth=9.655172413793103;startSize=6.662068965517242;" edge="1" parent="1" source="3" target="15">
+                    <mxGeometry width="100" height="100" relative="1" as="geometry">
+                        <mxPoint x="113" y="560" as="sourcePoint"/>
+                        <mxPoint x="213" y="460" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="41" value="Initiiert Transfer" style="edgeStyle=none;html=1;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=1.046;entryY=0.492;entryDx=0;entryDy=0;entryPerimeter=0;fontSize=8;startArrow=none;startFill=0;" edge="1" source="42" target="46" parent="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="59" style="edgeStyle=none;html=1;exitX=0;exitY=0;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;fontSize=8;startArrow=none;startFill=0;fillColor=#1ba1e2;strokeColor=#006EAF;strokeWidth=2;" edge="1" parent="1" source="42" target="15">
+                    <mxGeometry relative="1" as="geometry">
+                        <Array as="points">
+                            <mxPoint x="640" y="700"/>
+                            <mxPoint x="640" y="430"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="61" style="edgeStyle=none;html=1;exitX=0;exitY=1;exitDx=0;exitDy=0;entryX=1;entryY=1;entryDx=0;entryDy=0;fontSize=8;startArrow=classic;startFill=1;strokeWidth=3;fillColor=#e3c800;strokeColor=#B09500;" edge="1" parent="1" source="42" target="17">
+                    <mxGeometry relative="1" as="geometry">
+                        <Array as="points">
+                            <mxPoint x="640" y="840"/>
+                            <mxPoint x="340" y="840"/>
+                            <mxPoint x="40" y="840"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="65" style="edgeStyle=none;html=1;exitX=1;exitY=0;exitDx=0;exitDy=0;entryX=1;entryY=1;entryDx=0;entryDy=0;strokeWidth=3;fontSize=8;startArrow=classic;startFill=1;fillColor=#e3c800;strokeColor=#B09500;" edge="1" parent="1" source="42" target="51">
+                    <mxGeometry relative="1" as="geometry">
+                        <Array as="points">
+                            <mxPoint x="880" y="680"/>
+                            <mxPoint x="880" y="570"/>
+                            <mxPoint x="880" y="460"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="67" style="edgeStyle=none;html=1;exitX=0;exitY=0;exitDx=0;exitDy=0;entryX=1;entryY=1;entryDx=0;entryDy=0;strokeWidth=3;fontSize=8;startArrow=classic;startFill=1;fillColor=#e3c800;strokeColor=#B09500;" edge="1" parent="1" source="42" target="4">
+                    <mxGeometry relative="1" as="geometry">
+                        <Array as="points">
+                            <mxPoint x="600" y="680"/>
+                            <mxPoint x="420" y="680"/>
+                            <mxPoint x="120" y="680"/>
+                            <mxPoint x="120" y="400"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="42" value="&lt;font style=&quot;font-size: 12px;&quot;&gt;Mjöllnir 1&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fontSize=8;" vertex="1" parent="1">
+                    <mxGeometry x="707" y="740" width="120" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="43" value="&lt;font style=&quot;font-size: 12px;&quot;&gt;BME688&lt;/font&gt;" style="ellipse;whiteSpace=wrap;html=1;fontSize=8;" vertex="1" parent="1">
+                    <mxGeometry x="732" y="610" width="70" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="44" value="&lt;font style=&quot;font-size: 8px;&quot;&gt;Sendet Interrupt&lt;/font&gt;" style="edgeStyle=none;html=1;exitX=1;exitY=0;exitDx=0;exitDy=0;entryX=0;entryY=0.25;entryDx=0;entryDy=0;fontSize=8;startArrow=none;startFill=0;" edge="1" source="46" target="42" parent="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <Array as="points">
+                            <mxPoint x="627" y="750"/>
+                            <mxPoint x="657" y="750"/>
+                            <mxPoint x="687" y="750"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="45" value="Sendet Daten" style="edgeStyle=none;html=1;exitX=1;exitY=1;exitDx=0;exitDy=0;entryX=0;entryY=0.75;entryDx=0;entryDy=0;fontSize=8;startArrow=none;startFill=0;" edge="1" source="46" target="42" parent="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <Array as="points">
+                            <mxPoint x="637" y="810"/>
+                            <mxPoint x="657" y="810"/>
+                            <mxPoint x="687" y="810"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="46" value="&lt;font style=&quot;font-size: 12px;&quot;&gt;AS3935&lt;/font&gt;" style="ellipse;whiteSpace=wrap;html=1;fontSize=8;" vertex="1" parent="1">
+                    <mxGeometry x="557" y="755" width="70" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="47" value="Initiiert Transfer" style="edgeStyle=none;html=1;entryX=0.5;entryY=1;entryDx=0;entryDy=0;fontSize=8;exitX=0.5;exitY=0;exitDx=0;exitDy=0;startArrow=none;startFill=0;" edge="1" source="42" target="43" parent="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="707" y="700" as="sourcePoint"/>
+                        <mxPoint x="707" y="630" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="48" value="&lt;font style=&quot;font-size: 8px;&quot;&gt;Pollt Sensor&amp;nbsp;&lt;/font&gt;" style="edgeStyle=none;html=1;exitX=0.75;exitY=0;exitDx=0;exitDy=0;entryX=1;entryY=1;entryDx=0;entryDy=0;startArrow=none;startFill=0;fontSize=8;" edge="1" source="42" target="43" parent="1">
+                    <mxGeometry x="0.3014" relative="1" as="geometry">
+                        <mxPoint x="847.22" y="690" as="sourcePoint"/>
+                        <mxPoint x="756.9972004959566" y="692.342684704031" as="targetPoint"/>
+                        <Array as="points">
+                            <mxPoint x="817" y="720"/>
+                            <mxPoint x="817" y="670"/>
+                        </Array>
+                        <mxPoint as="offset"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="49" value="Sendet Daten" style="edgeStyle=none;html=1;exitX=0;exitY=1;exitDx=0;exitDy=0;entryX=0.25;entryY=0;entryDx=0;entryDy=0;fontSize=8;startArrow=none;startFill=0;" edge="1" source="43" target="42" parent="1">
+                    <mxGeometry x="-0.2541" relative="1" as="geometry">
+                        <mxPoint x="641.7772004959565" y="669.9973152959691" as="sourcePoint"/>
+                        <mxPoint x="732" y="672.34" as="targetPoint"/>
+                        <Array as="points">
+                            <mxPoint x="717" y="670"/>
+                            <mxPoint x="717" y="690"/>
+                            <mxPoint x="717" y="720"/>
+                        </Array>
+                        <mxPoint as="offset"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="50" value="Initiiert Transfer" style="edgeStyle=none;html=1;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=1.046;entryY=0.492;entryDx=0;entryDy=0;entryPerimeter=0;fontSize=8;startArrow=none;startFill=0;" edge="1" parent="1" source="51" target="55">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="60" style="edgeStyle=none;html=1;entryX=1;entryY=0.5;entryDx=0;entryDy=0;fontSize=8;startArrow=none;startFill=0;fillColor=#1ba1e2;strokeColor=#006EAF;strokeWidth=2;" edge="1" parent="1" source="51" target="15">
+                    <mxGeometry relative="1" as="geometry">
+                        <Array as="points">
+                            <mxPoint x="767" y="430"/>
+                            <mxPoint x="630" y="430"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="51" value="&lt;font style=&quot;font-size: 12px;&quot;&gt;Mjöllnir 1&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fontSize=8;" vertex="1" parent="1">
+                    <mxGeometry x="707" y="320" width="120" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="52" value="&lt;font style=&quot;font-size: 12px;&quot;&gt;BME688&lt;/font&gt;" style="ellipse;whiteSpace=wrap;html=1;fontSize=8;" vertex="1" parent="1">
+                    <mxGeometry x="732" y="190" width="70" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="53" value="&lt;font style=&quot;font-size: 8px;&quot;&gt;Sendet Interrupt&lt;/font&gt;" style="edgeStyle=none;html=1;exitX=1;exitY=0;exitDx=0;exitDy=0;entryX=0;entryY=0.25;entryDx=0;entryDy=0;fontSize=8;startArrow=none;startFill=0;" edge="1" parent="1" source="55" target="51">
+                    <mxGeometry relative="1" as="geometry">
+                        <Array as="points">
+                            <mxPoint x="627" y="330"/>
+                            <mxPoint x="657" y="330"/>
+                            <mxPoint x="687" y="330"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="54" value="Sendet Daten" style="edgeStyle=none;html=1;exitX=1;exitY=1;exitDx=0;exitDy=0;entryX=0;entryY=0.75;entryDx=0;entryDy=0;fontSize=8;startArrow=none;startFill=0;" edge="1" parent="1" source="55" target="51">
+                    <mxGeometry relative="1" as="geometry">
+                        <Array as="points">
+                            <mxPoint x="637" y="390"/>
+                            <mxPoint x="657" y="390"/>
+                            <mxPoint x="687" y="390"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="55" value="&lt;font style=&quot;font-size: 12px;&quot;&gt;AS3935&lt;/font&gt;" style="ellipse;whiteSpace=wrap;html=1;fontSize=8;" vertex="1" parent="1">
+                    <mxGeometry x="557" y="335" width="70" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="56" value="Initiiert Transfer" style="edgeStyle=none;html=1;entryX=0.5;entryY=1;entryDx=0;entryDy=0;fontSize=8;exitX=0.5;exitY=0;exitDx=0;exitDy=0;startArrow=none;startFill=0;" edge="1" parent="1" source="51" target="52">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="707" y="280" as="sourcePoint"/>
+                        <mxPoint x="707" y="210" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="57" value="&lt;font style=&quot;font-size: 8px;&quot;&gt;Pollt Sensor&amp;nbsp;&lt;/font&gt;" style="edgeStyle=none;html=1;exitX=0.75;exitY=0;exitDx=0;exitDy=0;entryX=1;entryY=1;entryDx=0;entryDy=0;startArrow=none;startFill=0;fontSize=8;" edge="1" parent="1" source="51" target="52">
+                    <mxGeometry x="0.3014" relative="1" as="geometry">
+                        <mxPoint x="847.22" y="270" as="sourcePoint"/>
+                        <mxPoint x="756.9972004959566" y="272.34268470403094" as="targetPoint"/>
+                        <Array as="points">
+                            <mxPoint x="817" y="300"/>
+                            <mxPoint x="817" y="250"/>
+                        </Array>
+                        <mxPoint as="offset"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="58" value="Sendet Daten" style="edgeStyle=none;html=1;exitX=0;exitY=1;exitDx=0;exitDy=0;entryX=0.25;entryY=0;entryDx=0;entryDy=0;fontSize=8;startArrow=none;startFill=0;" edge="1" parent="1" source="52" target="51">
+                    <mxGeometry x="-0.2541" relative="1" as="geometry">
+                        <mxPoint x="641.7772004959565" y="249.9973152959691" as="sourcePoint"/>
+                        <mxPoint x="732" y="252.34000000000003" as="targetPoint"/>
+                        <Array as="points">
+                            <mxPoint x="717" y="250"/>
+                            <mxPoint x="717" y="270"/>
+                            <mxPoint x="717" y="300"/>
+                        </Array>
+                        <mxPoint as="offset"/>
+                    </mxGeometry>
+                </mxCell>
+            </root>
+        </mxGraphModel>
+    </diagram>
+</mxfile>
