@@ -91,7 +91,7 @@ const History = () => {
                 <Button
                     variant="contained"
                     color="primary"
-                    className={styles.filterItem}
+                    className={styles.filterButton}
                 >
                     Apply Filters
                 </Button>

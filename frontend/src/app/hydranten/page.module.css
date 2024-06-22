@@ -1,0 +1,17 @@
+.container {
+    display: grid;
+    grid-template-columns: 3fr 1fr;
+    height: 100vh;
+    width: 100vw;
+}
+
+.mapContainer {
+    height: 100%;
+    width: 100%;
+}
+
+.infoPanel {
+    padding: 16px;
+    overflow: auto;
+    background-color: #f8f9fa;
+}

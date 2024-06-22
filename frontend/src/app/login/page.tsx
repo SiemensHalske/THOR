@@ -9,14 +9,18 @@ import {
     Typography,
     Card,
     CardContent,
-    CardActions,
     Box,
 } from "@mui/material";
+import axios from "axios";
+import { useRouter } from "next/navigation";
+import Link from "next/link";
 import styles from "./Login.module.css";
 
 const LoginPage = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const [error, setError] = useState("");
+    const router = useRouter();
 
     const handleEmailChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setEmail(event.target.value);
@@ -28,10 +32,31 @@ const LoginPage = () => {
         setPassword(event.target.value);
     };
 
-    const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-        // Handle the login logic here
-        console.log("Login submitted:", { email, password });
+        console.log("Form submitted"); // Debugging-Ausgabe
+        try {
+            const response = await axios.post(
+                "http://localhost:5000/auth/login",
+                {
+                    email,
+                    password,
+                },
+                {
+                    withCredentials: true, // WICHTIG: Damit Cookies gesendet werden
+                }
+            );
+
+            // Debugging-Ausgabe
+            console.log("Response Headers:", response.headers);
+
+            if (response.status === 200) {
+                router.push("/profile");
+            }
+        } catch (err) {
+            setError("Invalid email or password");
+            console.error("Error during login request:", err); // Debugging-Ausgabe
+        }
     };
 
     return (
@@ -70,6 +95,14 @@ const LoginPage = () => {
                                 variant="outlined"
                                 className={styles.textField}
                             />
+                            {error && (
+                                <Typography
+                                    color="error"
+                                    className={styles.error}
+                                >
+                                    {error}
+                                </Typography>
+                            )}
                             <Box mt={2} display="flex" justifyContent="center">
                                 <Button
                                     type="submit"
@@ -81,6 +114,12 @@ const LoginPage = () => {
                                 </Button>
                             </Box>
                         </form>
+                        <Box mt={2} display="flex" justifyContent="center">
+                            <Typography>
+                                Not registered?{" "}
+                                <Link href="/register">Sign up here</Link>
+                            </Typography>
+                        </Box>
                     </CardContent>
                 </Card>
             </Container>

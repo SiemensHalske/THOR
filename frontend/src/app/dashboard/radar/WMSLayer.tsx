@@ -1,8 +1,13 @@
-import { useEffect } from "react";
+import React, { useEffect } from "react";
 import { useMap } from "react-leaflet";
 import L from "leaflet";
 
-const WMSLayer = ({ url, layerName }: { url: string; layerName: string }) => {
+interface WMSLayerProps {
+    url: string;
+    layerName: string;
+}
+
+const WMSLayer: React.FC<WMSLayerProps> = ({ url, layerName }) => {
     const map = useMap();
 
     useEffect(() => {

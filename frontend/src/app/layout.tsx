@@ -1,5 +1,3 @@
-// src/app/layout.tsx
-
 "use client";
 
 import * as React from "react";
@@ -11,6 +9,7 @@ import "../assets/styles/globals.css";
 import { ReactNode, useState, useMemo } from "react";
 import { Provider } from "react-redux";
 import store from "./store";
+import { AuthProvider } from "../context/authContext"; // Importiere den AuthProvider
 
 interface LayoutProps {
     children: ReactNode;
@@ -45,15 +44,17 @@ const Layout = ({ children }: LayoutProps) => {
                     }}
                 >
                     <Provider store={store}>
-                        <ThemeProvider theme={theme}>
-                            <CssBaseline />
-                            <Navbar
-                                themeMode={themeMode}
-                                toggleTheme={toggleTheme}
-                            />
-                            <main>{children}</main>
-                            <Footer />
-                        </ThemeProvider>
+                        <AuthProvider>
+                            <ThemeProvider theme={theme}>
+                                <CssBaseline />
+                                <Navbar
+                                    themeMode={themeMode}
+                                    toggleTheme={toggleTheme}
+                                />
+                                <main>{children}</main>
+                                <Footer />
+                            </ThemeProvider>
+                        </AuthProvider>
                     </Provider>
                 </body>
             </html>

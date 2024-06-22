@@ -1,91 +1,125 @@
-import base64
-import os
-from flask import Blueprint, request, jsonify
-from flask_jwt_extended import (
-    create_access_token, jwt_required, get_jwt_identity
+"""
+Filename: blueprints/auth.py
+Author: Hendrik Siemens
+Date: 2024-06-18
+Description:
+    This module defines the authentication blueprint for the THOR application.
+    It includes routes for user login and saving user settings.
+
+Classes:
+    - No classes defined in this module.
+
+Functions:
+    - login(): Route for user login.
+    - save_settings(): Route for saving user settings.
+
+Usage Example:
+    The authentication blueprint provides routes for user login and saving user settings.
+    It includes routes to authenticate users and update their profile settings.
+    
+Notes:
+    - Blueprints are used to divide a Flask application into smaller, reusable components.
+    - They allow you to organize your application into separate modules and routes.
+    - Blueprints can be registered with the main application to define different parts of the application.
+
+References:
+    - https://flask.palletsprojects.com/en/2.0.x/blueprints/
+    - https://flask.palletsprojects.com/en/2.0.x/tutorial/views/
+    - https://flask.palletsprojects.com/en/2.0.x/tutorial/views/#blueprints-for-organization
+"""
+from flask import (
+    Blueprint, jsonify,
+    current_app, request
 )
-from app import db
+from flask_jwt_extended import (
+    create_access_token, get_jwt_identity, set_access_cookies
+)
+from flask_jwt_extended import verify_jwt_in_request
+
+from sqlalchemy.exc import SQLAlchemyError
+from flask_jwt_extended.exceptions import NoAuthorizationError, JWTExtendedException
+
 from app.models import User
 # from app import db
 
 auth_bp = Blueprint('auth', __name__)
 
 
-@auth_bp.route('/login', methods=['POST'])
-def login():
-    data = request.get_json()
-    email = data.get('email')
-    password = data.get('password')
+@auth_bp.route('/login', methods=['OPTIONS', 'POST'], strict_slashes=False)
+def login_options():
+    if request.method == 'OPTIONS':
+        response = jsonify({})
+        response.headers.add("Access-Control-Allow-Origin",
+                             "https://thor.thor-systems.de")
+        response.headers.add("Access-Control-Allow-Credentials", "true")
+        response.headers.add("Access-Control-Allow-Methods", "POST")
+        response.headers.add("Access-Control-Allow-Headers", "Content-Type")
+        return response
 
-    print(f'Email: {email}')
-    print(f'Password: {password}')
+    print("Login Request")
+
+    if not request.is_json:
+        return jsonify({"msg": "Missing JSON in request"}), 400
+
+    email = request.json.get('email') if request.json else None
+    password = request.json.get('password') if request.json else None
 
     if not email or not password:
-        return jsonify({'error': 'Email and password are required'}), 400
+        return jsonify({"msg": "Missing username or password"}), 400
 
     user = User.query.filter_by(email=email).first()
-
     if user and user.check_password(password):
-        access_token = create_access_token(identity=user.id)
-        return jsonify({'token': access_token}), 200
+        access_token = create_access_token(identity=email)
+        response = jsonify({"login": True})
+
+        set_access_cookies(response, access_token)
+
+        return response, 200
     else:
-        return jsonify({'error': 'Invalid email or password'}), 401
+        return jsonify({"msg": "Wrong username or password"}), 401
 
 
-@auth_bp.route('/save-settings', methods=['POST'])
-@jwt_required()
-def save_settings():
-    data = request.get_json()
-    user_id = get_jwt_identity()
+@auth_bp.route('/is_authenticated', methods=['POST'])
+def is_authenticated():
+    """
+    Checks if the request contains a valid
+    JWT token.
 
-    user = User.query.get(user_id)
-
-    if not user:
-        return jsonify({'error': 'User not found'}), 404
-
-    # Update profile picture path if provided
-    if 'profilePicture' in data and isinstance(data['profilePicture'], str):
-        try:
-            # Decode the Base64 image
-            img_data = base64.b64decode(data['profilePicture'])
-            img_filename = f'{user_id}_profile_picture.png'
-            img_path = os.path.join('static/images/profile_pictures',
-                                    img_filename
-                                    )
-
-            # Ensure the directory exists
-            os.makedirs(os.path.dirname(img_path), exist_ok=True)
-
-            # Save the image to the specified path
-            with open(img_path, 'wb') as f:
-                f.write(img_data)
-
-            # Update user's profile picture path
-            user.profile_picture = img_path
-
-        except Exception as e:
-            return jsonify(
-                {'error': f'Failed to save profile picture: {str(e)}'}), 500
-
-    # Update email notifications if provided
-    if 'emailNotifications' in data:
-        email_notifications = data['emailNotifications']
-        if email_notifications is not None and isinstance(email_notifications,
-                                                          bool
-                                                          ):
-            user.email_notifications = email_notifications
-
-    # Update push notifications if provided
-    if 'pushNotifications' in data:
-        push_notifications = data['pushNotifications']
-        if push_notifications is not None and isinstance(push_notifications,
-                                                         bool
-                                                         ):
-            user.push_notifications = push_notifications
+    Returns:
+    - userid, 200 if the token is valid
+    - None, 401 if the token is invalid
+    """
 
     try:
-        db.session.commit()
-        return jsonify({'message': 'Settings saved successfully'}), 200
+        verify_jwt_in_request()
+        current_user = get_jwt_identity()
+        user = User.query.filter_by(username=current_user).first()
+        if user:
+            userid = user.user_id
+            return jsonify({'userId': userid, 'isLoggedIn': True}), 200
+        else:
+            return jsonify({'userId': None, 'isLoggedIn': False}), 401
+    except (NoAuthorizationError, JWTExtendedException) as e:
+        print(f"JWT Error: {e}")
+        return jsonify({'userId': None, 'isLoggedIn': False}), 401
+    except SQLAlchemyError as e:
+        print(f"Database Error: {e}")
+        return jsonify({'userId': None, 'isLoggedIn': False}), 401
     except Exception as e:
-        db.session.rollback()
-        return jsonify({'error': str(e)}), 500
+        print(f"Unexpected Error: {e}")
+        return jsonify({'userId': None, 'isLoggedIn': False}), 401
+
+
+@auth_bp.route('/logout', methods=['POST'])
+def logout():
+    verify_jwt_in_request()
+
+    # remove the JWT cookie
+    response = jsonify({"msg": "logged_out"})
+    response.set_cookie(
+        'access_token_cookie',
+        value='',
+        expires=0,
+        httponly=True
+    )
+    return response, 200

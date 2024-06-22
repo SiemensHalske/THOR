@@ -7,72 +7,65 @@ import VectorLayer from "ol/layer/Vector";
 import OSM from "ol/source/OSM";
 import View from "ol/View";
 import { fromLonLat } from "ol/proj";
-import { Point } from "ol/geom";
-import { Feature } from "ol";
 import VectorSource from "ol/source/Vector";
-import { Style, Icon } from "ol/style";
+import KML from "ol/format/KML";
 import "ol/ol.css";
 
 interface SensorMapProps {
-    markers: { latitude: number; longitude: number; intensity: number }[];
-    locationEnabled: boolean;
     center: [number, number];
+    zoom?: number;
     visible?: boolean;
+    kmlFilePath: string;
 }
 
 const SensorMap: React.FC<SensorMapProps> = ({
-    markers,
-    locationEnabled,
     center,
+    zoom = 12.5,
     visible = true,
+    kmlFilePath,
 }) => {
     const mapContainerRef = useRef<HTMLDivElement | null>(null);
+    const mapInstanceRef = useRef<Map | null>(null);
 
     useEffect(() => {
-        if (mapContainerRef.current) {
-            const vectorSource = new VectorSource({
-                features: markers.map((marker) => {
-                    const feature = new Feature({
-                        geometry: new Point(
-                            fromLonLat([marker.longitude, marker.latitude])
-                        ),
-                    });
-                    feature.setStyle(
-                        new Style({
-                            image: new Icon({
-                                src: "/path/to/lightning-icon.png", // Path to the lightning icon
-                                scale: 0.05,
-                            }),
-                        })
-                    );
-                    return feature;
-                }),
-            });
+        if (!mapContainerRef.current) return;
 
-            const vectorLayer = new VectorLayer({
-                source: vectorSource,
-            });
+        const vectorSource = new VectorSource({
+            url: kmlFilePath,
+            format: new KML(),
+        });
 
-            const tileLayer = new TileLayer({
-                source: new OSM(),
-                visible: visible,
-            });
+        const vectorLayer = new VectorLayer({
+            source: vectorSource,
+        });
 
-            const map = new Map({
-                target: mapContainerRef.current as HTMLElement,
-                layers: [tileLayer, vectorLayer],
-                view: new View({
-                    center: fromLonLat(center),
-                    zoom: 12.5,
-                }),
-            });
+        const tileLayer = new TileLayer({
+            source: new OSM(),
+            visible: visible,
+        });
 
-            return () => map.setTarget(undefined); // Clean up the map instance on unmount
+        if (mapInstanceRef.current) {
+            mapInstanceRef.current.setTarget(undefined);
         }
-    }, [markers, center, visible]);
+
+        const map = new Map({
+            target: mapContainerRef.current as HTMLElement,
+            layers: [tileLayer, vectorLayer],
+            view: new View({
+                center: fromLonLat(center),
+                zoom: zoom,
+            }),
+        });
+
+        mapInstanceRef.current = map;
+
+        return () => {
+            map.setTarget(undefined); // Clean up the map instance on unmount
+        };
+    }, [center, zoom, visible, kmlFilePath]);
 
     return (
-        <div ref={mapContainerRef} style={{ width: "100%", height: "100%" }} />
+        <div ref={mapContainerRef} style={{ width: "100%", height: "600px" }} />
     );
 };
 

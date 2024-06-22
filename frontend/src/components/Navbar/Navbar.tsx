@@ -11,12 +11,12 @@ import {
     Divider,
     ListItemIcon,
     Box,
+    Button,
 } from "@mui/material";
 import {
     Brightness4,
     Brightness7,
     Menu,
-    AccountCircle,
     Home as HomeIcon,
     Info as InfoIcon,
     ContactMail as ContactIcon,
@@ -25,7 +25,9 @@ import {
 import Link from "next/link";
 import clsx from "clsx";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import styles from "./Navbar.module.css";
+import { useAuth } from "../../context/authContext"; // Importiere den useAuth Hook
 
 interface NavbarProps {
     themeMode: "light" | "dark";
@@ -34,6 +36,17 @@ interface NavbarProps {
 
 const Navbar: React.FC<NavbarProps> = ({ themeMode, toggleTheme }) => {
     const [drawerOpen, setDrawerOpen] = React.useState(false);
+    const { isLoggedIn, logout } = useAuth(); // Nutze den Auth-Kontext
+    const router = useRouter();
+
+    React.useEffect(() => {
+        console.log(`Navbar: isLoggedIn = ${isLoggedIn}`);
+    }, [isLoggedIn]);
+
+    const handleLogout = () => {
+        logout();
+        router.push("/");
+    };
 
     const toggleDrawer =
         (open: boolean) => (event: React.KeyboardEvent | React.MouseEvent) => {
@@ -100,7 +113,39 @@ const Navbar: React.FC<NavbarProps> = ({ themeMode, toggleTheme }) => {
             </List>
             <Divider />
             <List>
-                <ListItem button onClick={toggleTheme}>
+                {isLoggedIn ? (
+                    <ListItem
+                        button
+                        onClick={handleLogout}
+                        className={styles.logoutButton}
+                    >
+                        <ListItemIcon>
+                            <DashboardIcon />{" "}
+                            {/* Oder ein anderes passendes Icon */}
+                        </ListItemIcon>
+                        <ListItemText primary="Logout" />
+                    </ListItem>
+                ) : (
+                    <ListItem
+                        button
+                        component="a"
+                        href="/login"
+                        className={styles.loginButton}
+                    >
+                        <ListItemIcon>
+                            <DashboardIcon />{" "}
+                            {/* Oder ein anderes passendes Icon */}
+                        </ListItemIcon>
+                        <ListItemText primary="Login" />
+                    </ListItem>
+                )}
+            </List>
+            <List>
+                <ListItem
+                    button
+                    onClick={toggleTheme}
+                    className={styles.themeToggle}
+                >
                     <ListItemIcon>
                         {themeMode === "dark" ? (
                             <Brightness7 />
@@ -138,15 +183,6 @@ const Navbar: React.FC<NavbarProps> = ({ themeMode, toggleTheme }) => {
                     >
                         THOR
                     </Typography>
-                    <IconButton
-                        edge="end"
-                        color="inherit"
-                        aria-label="user"
-                        component="a"
-                        href="/profile"
-                    >
-                        <AccountCircle />
-                    </IconButton>
                 </Toolbar>
             </AppBar>
             <Drawer

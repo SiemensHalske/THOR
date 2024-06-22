@@ -1,0 +1,235 @@
+openapi: 3.0.0
+info:
+    title: THOR API
+    description: API for managing sensor data including retrieving, adding, and deleting sensor information.
+    version: 1.0.0
+servers:
+    - url: http://212.132.121.163:5000/api
+      description: Local server
+
+paths:
+    /sensors:
+        get:
+            summary: Get a list of all sensors
+            responses:
+                "200":
+                    description: A list of sensors
+                    content:
+                        application/json:
+                            schema:
+                                type: array
+                                items:
+                                    type: object
+                                    properties:
+                                        sensor_id:
+                                            type: integer
+                                            example: 1
+                                        serial_number:
+                                            type: string
+                                            example: "SN123456"
+                                        sensor_name:
+                                            type: string
+                                            example: "Temperature Sensor"
+                                        latitude:
+                                            type: number
+                                            format: float
+                                            example: 51.509865
+                                        longitude:
+                                            type: number
+                                            format: float
+                                            example: -0.118092
+                                        owner_id:
+                                            type: integer
+                                            example: 1
+        post:
+            summary: Add a new sensor
+            requestBody:
+                required: true
+                content:
+                    application/json:
+                        schema:
+                            type: object
+                            properties:
+                                sensor_id:
+                                    type: integer
+                                    example: 2
+                                serial_number:
+                                    type: string
+                                    example: "SN654321"
+                                sensor_name:
+                                    type: string
+                                    example: "Humidity Sensor"
+                                latitude:
+                                    type: number
+                                    format: float
+                                    example: 48.856613
+                                longitude:
+                                    type: number
+                                    format: float
+                                    example: 2.352222
+                                owner_id:
+                                    type: integer
+                                    example: 2
+            responses:
+                "201":
+                    description: Sensor successfully added
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                properties:
+                                    message:
+                                        type: string
+                                        example: "Sensor successfully added"
+        delete:
+            summary: Delete a sensor
+            requestBody:
+                required: true
+                content:
+                    application/json:
+                        schema:
+                            type: object
+                            properties:
+                                sensor_id:
+                                    type: integer
+                                    example: 2
+            responses:
+                "200":
+                    description: Sensor successfully deleted
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                properties:
+                                    message:
+                                        type: string
+                                        example: "Sensor successfully deleted"
+
+    /sensors/data/{sensor_id}:
+        get:
+            summary: Get sensor data by ID
+            parameters:
+                - in: path
+                  name: sensor_id
+                  required: true
+                  schema:
+                      type: integer
+                  description: The ID of the sensor
+            responses:
+                "200":
+                    description: A list of sensor data
+                    content:
+                        application/json:
+                            schema:
+                                type: array
+                                items:
+                                    type: object
+                                    properties:
+                                        data_id:
+                                            type: integer
+                                            example: 101
+                                        timestamp:
+                                            type: string
+                                            format: date-time
+                                            example: "2023-06-18T12:34:56Z"
+                                        temperature:
+                                            type: number
+                                            format: float
+                                            example: 22.5
+                                        humidity:
+                                            type: number
+                                            format: float
+                                            example: 45.0
+                                        pressure:
+                                            type: number
+                                            format: float
+                                            example: 1013.25
+                                        sensor_id:
+                                            type: integer
+                                            example: 1
+        post:
+            summary: Add new sensor data
+            parameters:
+                - in: path
+                  name: sensor_id
+                  required: true
+                  schema:
+                      type: integer
+                  description: The ID of the sensor
+            requestBody:
+                required: true
+                content:
+                    application/json:
+                        schema:
+                            type: object
+                            properties:
+                                timestamp:
+                                    type: string
+                                    format: date-time
+                                    example: "2023-06-18T12:34:56Z"
+                                temperature:
+                                    type: number
+                                    format: float
+                                    example: 22.5
+                                humidity:
+                                    type: number
+                                    format: float
+                                    example: 45.0
+                                pressure:
+                                    type: number
+                                    format: float
+                                    example: 1013.25
+                                sensor_id:
+                                    type: integer
+                                    example: 1
+            responses:
+                "201":
+                    description: Sensor data successfully added
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                properties:
+                                    message:
+                                        type: string
+                                        example: "Sensor data successfully added"
+        delete:
+            summary: Delete sensor data
+            parameters:
+                - in: path
+                  name: sensor_id
+                  required: true
+                  schema:
+                      type: integer
+                  description: The ID of the sensor
+            requestBody:
+                required: true
+                content:
+                    application/json:
+                        schema:
+                            type: object
+                            properties:
+                                data_id:
+                                    type: integer
+                                    example: 101
+            responses:
+                "200":
+                    description: Sensor data successfully deleted
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                properties:
+                                    message:
+                                        type: string
+                                        example: "Sensor data successfully deleted"
+
+components:
+    securitySchemes:
+        ApiKeyAuth:
+            type: apiKey
+            in: header
+            name: X-Api-Key
+
+security:
+    - ApiKeyAuth: []

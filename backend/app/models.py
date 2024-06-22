@@ -1,17 +1,56 @@
-"""# models.py
+"""
+Filename: models.py
+Author: Hendrik Siemens
+Date: 2024-06-18
+Description:
+    This module provides the database models for the THOR application.
+    The different classes here represent the tables in the database and their relationships.
+    They are used to store data for users, roles, sensors, sensor data, localization data,
+    and lightning detections.
 
-This module contains the database models for the application.
-The models are defined using SQLAlchemy ORM. The models are
-used to interact with the database and perform CRUD operations.
+Classes:
+    - Role (db.Model)
+    - User (db.Model)
+    - UserRole (db.Model)
+    - ApiKey (db.Model)
+    - Sensor (db.Model)
+    - LocalizationData (db.Model)
+    - SensorData (db.Model) 
+    - LightningDetection (db.Model)
 
-CRUD operations are Create, Read, Update, and Delete operations.
-These operations are used to interact with the database and perform
-operations on the data.
+Functions:
+    - Role:
+        - __init__(self, role_name)
+    - User:
+        - __init__(self, username, email, password, profile_picture)
+    - UserRole:
+        - __init__(self, user_id, role_id)
+    - ApiKey:
+        - __init__(self, api_key, user_id)
+    - Sensor:
+        - __init__(self, sensor_id, serial_number, sensor_name, latitude, longitude, owner_id)
+        - set_sensor(self, sensor_id, serial_number, sensor_name, latitude, longitude, owner_id)
+        - to_dict(self)
+    - LocalizationData:
+        - __init__(self, latitude, longitude, address, sensor_id)
+    - SensorData:
+        - __init__(self, timestamp, temperature, humidity, pressure, sensor_id)
+    - LightningDetection:
+        - __init__(self, timestamp, sensor_id, intensity, sensor_type)
 
-In contrary to the traditional way of writing SQL queries,
-SQLAlchemy ORM provides an object-oriented way of interacting
-with the database. The models defined in this module are used
-to interact with the database.
+Usage Example:
+    This module is used to define the database models for the THOR application.
+    The models are used to store data in the database and represent the tables and relationships
+    between them. The can be imported into other modules to interact with the database.
+    
+Notes:
+    - The models are defined using SQLAlchemy, a popular ORM for Python.
+    - Each model represents a table in the database and its columns.
+    - Relationships between models are defined using foreign keys and backrefs.
+
+References:
+    - https://www.sqlalchemy.org/
+    - https://docs.sqlalchemy.org/en/14/orm/tutorial.html
 """
 
 from . import db
@@ -22,6 +61,10 @@ class Role(db.Model):
     __tablename__ = 'roles'
     role_id = db.Column(db.Integer, primary_key=True)
     role_name = db.Column(db.String(50), nullable=False)
+
+    def __init__(self, role_name):
+        """Initializes the Role model."""
+        self.role_name = role_name
 
 
 class User(db.Model):
@@ -36,6 +79,32 @@ class User(db.Model):
     updated_at = db.Column(db.DateTime, default=db.func.current_timestamp(
     ), onupdate=db.func.current_timestamp())
 
+    def __init__(self, username, email, password, profile_picture):
+        """Initializes the User model."""
+        self.username = username
+        self.email = email
+        self.password = password
+        self.profile_picture = profile_picture
+
+    def set_password(self, password):
+        """Sets the password for the user."""
+        self.password = password
+
+    def check_password(self, password):
+        """Checks if the password is correct."""
+        return self.password == password
+
+    def to_dict(self):
+        """Converts the User model to a dictionary."""
+        return {
+            'user_id': self.user_id,
+            'username': self.username,
+            'email': self.email,
+            'profile_picture': self.profile_picture,
+            'created_at': self.created_at,
+            'updated_at': self.updated_at
+        }
+
 
 class UserRole(db.Model):
     """UserRole model for the application."""
@@ -44,6 +113,25 @@ class UserRole(db.Model):
         'users.user_id'), primary_key=True)
     role_id = db.Column(db.Integer, db.ForeignKey(
         'roles.role_id'), primary_key=True)
+
+    def __init__(self, user_id, role_id):
+        """Initializes the UserRole model."""
+        self.user_id = user_id
+        self.role_id = role_id
+
+    def set_role(self, user_id, role_id):
+        """Sets a role for a user in the database."""
+        user_role = UserRole(user_id=user_id, role_id=role_id)
+        db.session.add(user_role)
+        db.session.commit()
+        return user_role
+
+    def to_dict(self):
+        """Converts the UserRole model to a dictionary."""
+        return {
+            'user_id': self.user_id,
+            'role_id': self.role_id
+        }
 
 
 class ApiKey(db.Model):
@@ -55,6 +143,11 @@ class ApiKey(db.Model):
         'users.user_id'), nullable=False)
 
     user = db.relationship('User', backref=db.backref('apikeys', lazy=True))
+
+    def __init__(self, api_key, user_id):
+        """Initializes the ApiKey model."""
+        self.api_key = api_key
+        self.user_id = user_id
 
 
 class Sensor(db.Model):
@@ -96,6 +189,7 @@ class Sensor(db.Model):
         return sensor
 
     def to_dict(self):
+        """Converts the Sensor model to a dictionary."""
         return {
             'sensor_id': self.sensor_id,
             'serial_number': self.serial_number,
@@ -105,8 +199,23 @@ class Sensor(db.Model):
             'owner_id': self.owner_id
         }
 
+    def save(self):
+        """Saves the sensor to the database."""
+        db.session.add(self)
+        self.finish_action()
+
+    def delete(self):
+        """Deletes the sensor from the database."""
+        db.session.delete(self)
+        self.finish_action()
+
+    def finish_action(self):
+        """Finish the action."""
+        db.session.commit()
+
 
 class LocalizationData(db.Model):
+    """LocalizationData model for the application."""
     __tablename__ = 'localizationdata'
     location_id = db.Column(db.Integer, primary_key=True)
     latitude = db.Column(db.Float, nullable=False)
@@ -117,8 +226,16 @@ class LocalizationData(db.Model):
     sensor = db.relationship(
         'Sensor', backref=db.backref('localizationdata', lazy=True))
 
+    def __init__(self, latitude, longitude, address, sensor_id):
+        """Initializes the LocalizationData model."""
+        self.latitude = latitude
+        self.longitude = longitude
+        self.address = address
+        self.sensor_id = sensor_id
+
 
 class SensorData(db.Model):
+    """SensorData model for the application."""
     __tablename__ = 'sensordata'
     data_id = db.Column(db.Integer, primary_key=True)
     timestamp = db.Column(db.DateTime, nullable=False)
@@ -130,15 +247,44 @@ class SensorData(db.Model):
     sensor = db.relationship(
         'Sensor', backref=db.backref('sensordata', lazy=True))
 
+    def __init__(self, timestamp, temperature, humidity, pressure, sensor_id):
+        """Initializes the SensorData model."""
+        self.timestamp = timestamp
+        self.temperature = temperature
+        self.humidity = humidity
+        self.pressure = pressure
+        self.sensor_id = sensor_id
+
+    def save(self):
+        """Saves the sensor data to the database."""
+        db.session.add(self)
+        self.finish_action()
+
+    def delete(self):
+        """Deletes the sensor data from the database."""
+        db.session.delete(self)
+        self.finish_action()
+
+    def finish_action(self):
+        """Finish the action."""
+        db.session.commit()
+
 
 class LightningDetection(db.Model):
+    """LightningDetection model for the application."""
     __tablename__ = 'lightningdetection'
     lightning_id = db.Column(db.Integer, primary_key=True)
     timestamp = db.Column(db.DateTime, nullable=False)
     sensor_id = db.Column(db.Integer, db.ForeignKey('sensors.sensor_id'))
-    type = db.Column(db.String(50))
     intensity = db.Column(db.Float)
     sensor_type = db.Column(db.String(50))
 
     sensor = db.relationship('Sensor', backref=db.backref(
         'lightningdetections', lazy=True))
+
+    def __init__(self, timestamp, sensor_id, intensity, sensor_type):
+        """Initializes the LightningDetection model."""
+        self.timestamp = timestamp
+        self.sensor_id = sensor_id
+        self.intensity = intensity
+        self.sensor_type = sensor_type

@@ -1,3 +1,34 @@
+"""
+Filename: service/dwd_image_service.py
+Author: Hendrik Siemens
+Date: 2024-06-18
+Description:
+    This module provides a service to fetch images from a given URL and store them locally.
+    The service is intended to be run as a background service and not directly by the user.
+
+Classes:
+    - No classes defined in this module.
+
+Functions:
+    - fetch_and_store_image(image_url, save_path)
+    - scheduled_image_update(app)
+    - init_image_service(app)
+
+Usage Example:
+    This module is used to fetch images from a given URL and store them locally.
+    The service is scheduled to run at regular intervals to update the images.
+    
+Notes:
+    - The service fetches images from a given URL and stores them locally on the server.
+    - The images are updated at regular intervals to ensure that the latest images are always available.
+    - The service is intended to be run as a background service and not directly by the user.
+
+References:
+    - https://requests.readthedocs.io/en/master/
+    - https://apscheduler.readthedocs.io/en/stable/
+    - https://flask.palletsprojects.com/en/2.0.x/
+"""
+
 import os
 import requests
 from apscheduler.schedulers.background import BackgroundScheduler

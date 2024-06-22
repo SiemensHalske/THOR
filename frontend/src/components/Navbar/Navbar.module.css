@@ -30,7 +30,7 @@
     display: flex;
     flex-direction: column;
     height: 100%;
-    justify-content: space-between;
+    justify-content: flex-start;
 }
 
 .logoContainer {
@@ -49,5 +49,9 @@
 }
 
 .themeToggle {
-    margin-bottom: 20px;
+    margin-top: 10px; /* Anpassung des Abstands */
+}
+
+.logoutButton {
+    margin-top: 10px; /* Anpassung des Abstands */
 }

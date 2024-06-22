@@ -1,0 +1,21 @@
+Filename: your_module_name.py
+Author: Hendrik Siemens
+Date: 2024-06-18
+Description: Kurze Beschreibung des Moduls und dessen Funktion.
+
+Classes:
+    ClassName1: Beschreibung der Klasse 1.
+    ClassName2: Beschreibung der Klasse 2.
+
+Functions:
+    function_name_1: Beschreibung der Funktion 1.
+    function_name_2: Beschreibung der Funktion 2.
+
+Usage Example:
+    Beispielcode, der zeigt, wie das Modul verwendet werden kann.
+    
+Notes:
+    Zusätzliche Hinweise oder Bemerkungen.
+
+References:
+    Links oder Verweise auf relevante Dokumentationen, Artikel oder Ressourcen.
