@@ -1,17 +1,21 @@
+/* page.module.css */
+
 .container {
-    display: grid;
-    grid-template-columns: 3fr 1fr;
+    display: flex;
     height: 100vh;
-    width: 100vw;
 }
 
 .mapContainer {
+    flex: 3;
     height: 100%;
-    width: 100%;
 }
 
 .infoPanel {
-    padding: 16px;
-    overflow: auto;
-    background-color: #f8f9fa;
+    flex: 1;
+    padding: 20px;
+    overflow-y: auto;
+}
+
+.infoCard {
+    margin-top: 20px;
 }

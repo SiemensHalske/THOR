@@ -15,12 +15,14 @@ import axios from "axios";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import styles from "./Login.module.css";
+import { useAuth } from "../../context/authContext";
 
 const LoginPage = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [error, setError] = useState("");
     const router = useRouter();
+    const { login } = useAuth(); // Use the auth context
 
     const handleEmailChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setEmail(event.target.value);
@@ -51,6 +53,8 @@ const LoginPage = () => {
             console.log("Response Headers:", response.headers);
 
             if (response.status === 200) {
+                // Update the auth context
+                login(response.data.userId);
                 router.push("/profile");
             }
         } catch (err) {

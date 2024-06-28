@@ -33,14 +33,14 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
                 const token = localStorage.getItem("authToken");
                 if (token) {
                     const response = await fetch(
-                        "http://localhost:8080/api/is_authenticated",
+                        "http://localhost:5000/api/is_authenticated",
                         {
                             method: "GET",
                             headers: {
                                 "Content-Type": "application/json",
                                 Authorization: `Bearer ${token}`,
                             } as HeadersInit,
-                            credentials: "include",
+                            credentials: "include", // Füge credentials hinzu
                         }
                     );
 

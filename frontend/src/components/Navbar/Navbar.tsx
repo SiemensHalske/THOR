@@ -21,6 +21,9 @@ import {
     Info as InfoIcon,
     ContactMail as ContactIcon,
     Dashboard as DashboardIcon,
+    AccountCircle as ProfileIcon,
+    ExitToApp as LogoutIcon,
+    Login as LoginIcon,
 } from "@mui/icons-material";
 import Link from "next/link";
 import clsx from "clsx";
@@ -114,27 +117,24 @@ const Navbar: React.FC<NavbarProps> = ({ themeMode, toggleTheme }) => {
             <Divider />
             <List>
                 {isLoggedIn ? (
-                    <ListItem
-                        button
-                        onClick={handleLogout}
-                        className={styles.logoutButton}
-                    >
-                        <ListItemIcon>
-                            <DashboardIcon />{" "}
-                            {/* Oder ein anderes passendes Icon */}
-                        </ListItemIcon>
-                        <ListItemText primary="Logout" />
-                    </ListItem>
+                    <>
+                        <ListItem button component="a" href="/profile">
+                            <ListItemIcon>
+                                <ProfileIcon />
+                            </ListItemIcon>
+                            <ListItemText primary="Profile" />
+                        </ListItem>
+                        <ListItem button onClick={handleLogout}>
+                            <ListItemIcon>
+                                <LogoutIcon />
+                            </ListItemIcon>
+                            <ListItemText primary="Logout" />
+                        </ListItem>
+                    </>
                 ) : (
-                    <ListItem
-                        button
-                        component="a"
-                        href="/login"
-                        className={styles.loginButton}
-                    >
+                    <ListItem button component="a" href="/login">
                         <ListItemIcon>
-                            <DashboardIcon />{" "}
-                            {/* Oder ein anderes passendes Icon */}
+                            <LoginIcon />
                         </ListItemIcon>
                         <ListItemText primary="Login" />
                     </ListItem>

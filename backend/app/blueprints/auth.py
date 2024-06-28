@@ -20,7 +20,8 @@ Usage Example:
 Notes:
     - Blueprints are used to divide a Flask application into smaller, reusable components.
     - They allow you to organize your application into separate modules and routes.
-    - Blueprints can be registered with the main application to define different parts of the application.
+    - Blueprints can be registered with the main application to define different parts
+    of the application.
 
 References:
     - https://flask.palletsprojects.com/en/2.0.x/blueprints/
@@ -29,12 +30,11 @@ References:
 """
 from flask import (
     Blueprint, jsonify,
-    current_app, request
+    request, make_response
 )
 from flask_jwt_extended import (
-    create_access_token, get_jwt_identity, set_access_cookies
+    create_access_token, get_jwt_identity, set_access_cookies, verify_jwt_in_request
 )
-from flask_jwt_extended import verify_jwt_in_request
 
 from sqlalchemy.exc import SQLAlchemyError
 from flask_jwt_extended.exceptions import NoAuthorizationError, JWTExtendedException
@@ -45,16 +45,22 @@ from app.models import User
 auth_bp = Blueprint('auth', __name__)
 
 
+def cors_response():
+    response = make_response()
+    response.headers.add("Access-Control-Allow-Origin",
+                         "https://thor.thor-systems.de")
+    response.headers.add("Access-Control-Allow-Credentials", "true")
+    response.headers.add("Access-Control-Allow-Methods",
+                         "GET,HEAD,OPTIONS,POST,PUT")
+    response.headers.add("Access-Control-Allow-Headers",
+                         "Origin, X-Requested-With, Content-Type, Accept, Authorization")
+    return response
+
+
 @auth_bp.route('/login', methods=['OPTIONS', 'POST'], strict_slashes=False)
-def login_options():
+def login():
     if request.method == 'OPTIONS':
-        response = jsonify({})
-        response.headers.add("Access-Control-Allow-Origin",
-                             "https://thor.thor-systems.de")
-        response.headers.add("Access-Control-Allow-Credentials", "true")
-        response.headers.add("Access-Control-Allow-Methods", "POST")
-        response.headers.add("Access-Control-Allow-Headers", "Content-Type")
-        return response
+        return cors_response()
 
     print("Login Request")
 
@@ -75,20 +81,13 @@ def login_options():
         set_access_cookies(response, access_token)
 
         return response, 200
-    else:
-        return jsonify({"msg": "Wrong username or password"}), 401
+    return jsonify({"msg": "Wrong username or password"}), 401
 
 
-@auth_bp.route('/is_authenticated', methods=['POST'])
+@auth_bp.route('/is_authenticated', methods=['OPTIONS', 'POST'])
 def is_authenticated():
-    """
-    Checks if the request contains a valid
-    JWT token.
-
-    Returns:
-    - userid, 200 if the token is valid
-    - None, 401 if the token is invalid
-    """
+    if request.method == 'OPTIONS':
+        return cors_response()
 
     try:
         verify_jwt_in_request()
@@ -110,8 +109,11 @@ def is_authenticated():
         return jsonify({'userId': None, 'isLoggedIn': False}), 401
 
 
-@auth_bp.route('/logout', methods=['POST'])
+@auth_bp.route('/logout', methods=['OPTIONS', 'POST'])
 def logout():
+    if request.method == 'OPTIONS':
+        return cors_response()
+
     verify_jwt_in_request()
 
     # remove the JWT cookie

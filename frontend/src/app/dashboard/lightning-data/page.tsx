@@ -5,11 +5,15 @@ import { Box, Button, Slider, Typography } from "@mui/material";
 import SensorMap from "../../../components/SensorMap/SensorMap";
 import styles from "./lightning-data.module.css";
 
-const LightningData = () => {
+interface Marker {
+    latitude: number;
+    longitude: number;
+    intensity: number;
+}
+
+const LightningData: React.FC = () => {
     const [locationEnabled, setLocationEnabled] = useState(false);
-    const [lightningData, setLightningData] = useState<
-        { latitude: number; longitude: number; intensity: number }[]
-    >([]);
+    const [lightningData, setLightningData] = useState<Marker[]>([]);
     const [intensityRange, setIntensityRange] = useState<number[]>([0, 100]);
     const [timeRange, setTimeRange] = useState<number[]>([0, 60]);
     const [serviceStatus, setServiceStatus] = useState<string>("warning");
