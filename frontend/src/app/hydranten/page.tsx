@@ -57,17 +57,43 @@ const Page: React.FC = () => {
                     popupAnchor: [1, -34],
                 });
 
-                // Layer for lines
+                // Schritt 1: Erstelle eine Karte (Graph) der Verbindungen
+                const connections: { [key: string]: number } = {};
+
+                lineCoordinates.forEach((line) => {
+                    line.forEach((point) => {
+                        const key = `${point[0]},${point[1]}`;
+                        connections[key] = (connections[key] || 0) + 1;
+                    });
+                });
+
+                // Schritt 2: Erkenne Knoten mit nur einer Verbindung
+                const endPoints = new Set<string>();
+                for (const [key, count] of Object.entries(connections)) {
+                    if (count === 1) {
+                        endPoints.add(key);
+                    }
+                }
+
+                // Schritt 3: Färbung basierend auf diesen Informationen
                 const linesLayer = L.layerGroup();
                 lineCoordinates.forEach((line) => {
+                    const start = `${line[0][0]},${line[0][1]}`;
+                    const end = `${line[line.length - 1][0]},${
+                        line[line.length - 1][1]
+                    }`;
+                    const isEndPoint =
+                        endPoints.has(start) || endPoints.has(end);
+                    const color = isEndPoint ? "red" : "blue";
+
                     const latlngs = line.map(
                         (point) => [point[1], point[0]] as [number, number]
                     );
-                    L.polyline(latlngs, { color: "blue" }).addTo(linesLayer);
+                    L.polyline(latlngs, { color }).addTo(linesLayer);
                 });
                 linesLayer.addTo(map);
 
-                // Layer for markers
+                // Layer für Marker
                 const markersLayer = L.layerGroup();
                 hydrantCoordinates.forEach((hydrant) => {
                     L.marker([hydrant.lat, hydrant.lng], { icon: customIcon })
