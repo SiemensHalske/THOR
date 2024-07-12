@@ -12,8 +12,10 @@ import "ol/ol.css";
 import { Point } from "ol/geom";
 import Feature from "ol/Feature";
 import { Icon, Style } from "ol/style";
+import { Select } from "ol/interaction";
 
 interface Marker {
+    id: number;
     latitude: number;
     longitude: number;
     intensity: number;
@@ -23,9 +25,10 @@ interface SensorMapProps {
     center: [number, number];
     zoom?: number;
     visible?: boolean;
-    kmlFilePath?: string; // KML-Dateipfad optional gemacht
+    kmlFilePath?: string;
     markers: Marker[];
     locationEnabled: boolean;
+    onMarkerClick: (id: number) => void;
 }
 
 const SensorMap: React.FC<SensorMapProps> = ({
@@ -35,6 +38,7 @@ const SensorMap: React.FC<SensorMapProps> = ({
     kmlFilePath,
     markers,
     locationEnabled,
+    onMarkerClick,
 }) => {
     const mapContainerRef = useRef<HTMLDivElement | null>(null);
     const mapInstanceRef = useRef<Map | null>(null);
@@ -76,20 +80,21 @@ const SensorMap: React.FC<SensorMapProps> = ({
             }),
         });
 
-        // Add markers if locationEnabled is true
         if (locationEnabled) {
             const markerSource = new VectorSource();
             markers.forEach((marker) => {
+                console.log("Adding marker: ", marker); // Debug: log marker data
                 const feature = new Feature({
                     geometry: new Point(
                         fromLonLat([marker.longitude, marker.latitude])
                     ),
                 });
+                feature.setId(marker.id); // Correctly set the id
                 feature.setStyle(
                     new Style({
                         image: new Icon({
-                            src: "/path/to/marker-icon.png", // Pfad zum Marker-Icon
-                            scale: marker.intensity / 100, // Beispiel für Intensität basierte Skalierung
+                            src: "/marker-icon2.png",
+                            scale: marker.intensity / 100,
                         }),
                     })
                 );
@@ -101,14 +106,39 @@ const SensorMap: React.FC<SensorMapProps> = ({
             });
 
             map.addLayer(markerLayer);
+
+            const select = new Select({
+                layers: [markerLayer],
+            });
+
+            select.on("select", (event) => {
+                if (event.selected.length > 0) {
+                    const selectedFeature = event.selected[0];
+                    const id = selectedFeature.getId();
+                    console.log(`Feature selected: ${id}`); // Debug: log feature id
+                    if (typeof id === "number") {
+                        onMarkerClick(id);
+                    }
+                }
+            });
+
+            map.addInteraction(select);
         }
 
         mapInstanceRef.current = map;
 
         return () => {
-            map.setTarget(undefined); // Clean up the map instance on unmount
+            map.setTarget(undefined);
         };
-    }, [center, zoom, visible, kmlFilePath, markers, locationEnabled]);
+    }, [
+        center,
+        zoom,
+        visible,
+        kmlFilePath,
+        markers,
+        locationEnabled,
+        onMarkerClick,
+    ]);
 
     return (
         <div ref={mapContainerRef} style={{ width: "100%", height: "600px" }} />

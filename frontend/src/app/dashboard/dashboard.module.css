@@ -3,7 +3,6 @@
 .container {
     display: flex;
     flex-direction: column;
-    height: calc(100vh - 128px); /* Höhe der Navbar und des Footers */
 }
 
 .mainNoSidebar {

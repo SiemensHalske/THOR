@@ -1,11 +1,18 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
+import dynamic from "next/dynamic";
 import { Box, Button, Slider, Typography } from "@mui/material";
-import SensorMap from "../../../components/SensorMap/SensorMap";
 import styles from "./lightning-data.module.css";
 
+const SensorMap = dynamic(
+    () => import("../../../components/SensorMap/SensorMap"),
+    { ssr: false }
+);
+
 interface Marker {
+    id: number;
     latitude: number;
     longitude: number;
     intensity: number;
@@ -17,6 +24,7 @@ const LightningData: React.FC = () => {
     const [intensityRange, setIntensityRange] = useState<number[]>([0, 100]);
     const [timeRange, setTimeRange] = useState<number[]>([0, 60]);
     const [serviceStatus, setServiceStatus] = useState<string>("warning");
+    const router = useRouter();
 
     const toggleLocation = () => {
         setLocationEnabled(!locationEnabled);
@@ -35,11 +43,22 @@ const LightningData: React.FC = () => {
         setTimeRange(newValue as number[]);
     };
 
+    const handleMarkerClick = (id: number) => {
+        router.push(`/sensor-data?sensorId=${id}`);
+    };
+
     useEffect(() => {
         // Fetch lightning data from the backend
         fetch("/api/lightning")
             .then((response) => response.json())
-            .then((data) => setLightningData(data))
+            .then((data: Marker[]) => {
+                // Ensure each marker has an id
+                const dataWithIds = data.map((item, index) => ({
+                    ...item,
+                    id: index,
+                }));
+                setLightningData(dataWithIds);
+            })
             .catch((error) =>
                 console.error("Error fetching lightning data:", error)
             );
@@ -60,6 +79,7 @@ const LightningData: React.FC = () => {
                     markers={lightningData}
                     locationEnabled={locationEnabled}
                     center={[8.251120510754511, 51.73967409793433]}
+                    onMarkerClick={handleMarkerClick}
                 />
             </Box>
             <Box className={styles.panels}>

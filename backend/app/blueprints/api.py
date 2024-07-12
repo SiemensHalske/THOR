@@ -58,6 +58,10 @@ api_bp = Blueprint('api', __name__)
 
 
 def get_api_key():
+    """
+    Get the API key from the Authorization header or the remote address if no
+    key is provided.
+    """
     auth_header = request.headers.get('Authorization')
     if auth_header and auth_header.startswith('Bearer '):
         return auth_header.split(" ")[1]
@@ -105,15 +109,21 @@ def sensors() -> Union[Response, Tuple[Response, int]]:
 
     elif request.method == 'POST':
         if not request.json:
-            return jsonify({"error": "Bad Request", "message": ra.BODY_EMPTY}), rc.BAD_REQUEST
+            return jsonify(
+                {"error": "Bad Request", "message": ra.BODY_EMPTY}
+            ), rc.BAD_REQUEST
 
         required_fields = ['sensor_id', 'serial_number',
                            'sensor_name', 'latitude', 'longitude', 'owner_id']
         if not all(field in request.json for field in required_fields):
-            return jsonify({"error": "Bad Request", "message": ra.MISS_VALUES}), rc.BAD_REQUEST
+            return jsonify(
+                {"error": "Bad Request", "message": ra.MISS_VALUES}
+            ), rc.BAD_REQUEST
 
         if Sensor.query.filter_by(sensor_id=request.json['sensor_id']).first():
-            return jsonify({"error": "Bad Request", "message": ra.SENS_EXISTS}), rc.BAD_REQUEST
+            return jsonify(
+                {"error": "Bad Request", "message": ra.SENS_EXISTS}
+            ), rc.BAD_REQUEST
 
         sensor = Sensor(
             sensor_id=request.json['sensor_id'],
@@ -192,14 +202,13 @@ def sensor_data(sensor_id: int) -> Union[Response, Tuple[Response, int]]:
 
         required_fields = ['timestamp', 'temperature',
                            'humidity', 'pressure', 'sensor_id']
-        if not all(field in request.json for field in required_fields):
-            return jsonify({"error": "Bad Request", "message": "Missing values"}), rc.BAD_REQUEST
 
-        if sensor_id != request.json.get('sensor_id'):
-            return jsonify({"error": "Bad Request", "message": ra.URL_MATCH}), rc.BAD_REQUEST
+        if not all(field in request.json for field in required_fields) or sensor_id != request.json.get('sensor_id'):
+            return jsonify({"error": "Bad Request", "message": "Missing values or URL does not match"}), rc.BAD_REQUEST
 
         sensor = Sensor.query.filter_by(
             sensor_id=request.json['sensor_id']).first()
+
         if not sensor:
             return jsonify({"error": "Not Found", "message": ra.SENS_NOT_FOUND}), rc.NOT_FOUND
 
